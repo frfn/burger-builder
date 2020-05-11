@@ -1,0 +1,61 @@
+1. Planning App
+** Things WILL change, and that's perfectly normal.
+
+- Component Tree / Structure
+    Create, design and split into components
+
+- Application State (Data) 
+    Data we will be using in our application (this.state({...}))
+
+- Component VS Container
+    Which components should be Stateless or Stateful
+
+----------------------------------------------------------------------------
+2. Layout
+
+- Draw a UI 
+    Draw how the website/application will look like
+    Nav bar, header, footer, content, images on page, body
+
+Burger Builder
+    Burger Picture (dynamic)
+    Contents for burger: add/remove cheese, burger, salad
+    Checkout button, etc.
+
+    App contains --> 
+                    layout components  
+                                    --> Toolbar
+                                        --> Side drawer toggle
+                                        --> Logo
+                                        --> Nav items
+
+                                    --> Side drawer
+                                        -->
+
+                                    --> Backdrop
+                                        -->
+
+                                    --> Props + Children
+                                        --> Burger Builder (Stateful/Container Class)
+                                            --> Build Control
+                                                --> Cheese, Meat, Burger
+                                                --> Order Button
+
+                                            --> Burger
+                                                --> Ingredients will show under the burger component
+
+                                            --> Modal (price, tax, etc.)
+                                                --> Wrapper component
+
+----------------------------------------------------------------------------
+3. State ( Data )
+
+- this.state({ ingredients: { ..code.. }})
+    - purchased, totalprice
+    - make it simple!
+
+- Manage the state IN BURGER BUILDER, look at 2. Layout to see the location of Burger Builder.
+
+- Optimize? Pure components, shouldComponentUpdate, etc!
+
+----------------------------------------------------------------------------
