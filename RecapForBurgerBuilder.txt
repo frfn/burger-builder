@@ -115,4 +115,23 @@ Creating Project.
             return <JSX />
         }) 
     })
+    
+9. Added the Burger Control
+    How does it work?
+     - Less/More button is a <button> with onClick function
+        - it takes in an argument, which in this case is 'type'
+        - 'type' is collected when the the .map() is initiated in the BuildControl.js
+        - When passing, the anonymous function of: () => func(type) is called and passed.
+            - when button is clicked, 'type' is passed into the argument and the function runs.
+                - FUNCTION takes in argument, grabs the value by this.state.ingredients[type]
+                - conditional was created later
+                - spread operator was used and the dynamic bracket notation were used
+                - price is changed, and I used a Object to keep track of the of price for each item
+                - simple calculation of oldPrice + priceOfItem
+                - this.setState({...})
+
+    In render?
+     - disableLess/disableMore were created
+        Grabs the ingredients, then a for loop goes through each one and changes the value to a true or false value
+            - it is then passed through components till it hits BuildControl.js and put in 'required={}' inside an HTML button tag
 

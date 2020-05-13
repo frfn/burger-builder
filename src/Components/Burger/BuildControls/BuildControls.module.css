@@ -1,0 +1,16 @@
+.BuildControls {
+    width: 100%;
+    background-color: #CF8F2E;
+
+    /* flex box stuff ... you can also use GRID, better. */
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    /* offset-x | offset-y | blur-radius | color */
+    box-shadow: 0 2px 1px #CCC;
+    margin: auto;
+
+    /* vertical | horizontal */
+    padding: 10px 0;
+}
