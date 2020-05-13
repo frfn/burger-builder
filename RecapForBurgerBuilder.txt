@@ -19,8 +19,8 @@
     Nav bar, header, footer, content, images on page, body
 
 Burger Builder
-    Burger Picture (dynamic)
-    Contents for burger: add/remove cheese, burger, salad
+    Burger Picture (dynamic) - bunch of Styled Divs with CSS
+    Contents for burger: add/remove cheese, burger, salad, bacon, etc.
     Checkout button, etc.
 
     App contains --> 
@@ -60,3 +60,59 @@ Burger Builder
 - Optimize? Pure components, shouldComponentUpdate, etc!
 
 ----------------------------------------------------------------------------
+
+Creating Project.
+
+1. Create components
+    Think of components you will need for project/use repeatedly
+    - Create Aux.js for adjacent JSX, etc.
+
+2. Form layout of project
+    Place components where they should go, what components do you need
+
+3. Create folders for components and see where they will go in your source code structure
+    Ex. Burger(w/ other sub folders) is in Components 
+
+4. Build components one by one
+    Don't be too thorough, just see how the component will work with others!
+
+5. Study code
+    Every so often, stop and check code + test! 
+        Logic, CSS, etc.
+
+6. Burger Overview
+    How is it working?
+     - App.js --> Layout.js --> BurgerBuilder.js --> Burger.js --> BurgerIngredients.js
+        BurgerIngredients.js returns DIVs that are styled, colors and shap has been altered from a rectangle.
+
+7. Burger Overview Pt. II
+    Burger has an interesting tranformation array (by Max), makes sense, confusing to follow tbh for people that doesn't know JS.
+     - [...Array([props.ingredients[ingredientKey])] <-- results to [ [undefined], [undefined, undefined] ] 
+    
+     - One array that has multiple arrays... [ []. [], [] ], and in this case, we only care about the length of the array
+       we do not care about the values inside array.
+
+8. Learned some JavaScript methods
+    - Note reduce can have an INITIAL value ... could be number, object, array, etc. BurgerBuilder uses [] as initial value, and uses .concat() to combine arrays.
+    Using .push() without conditional check will give error. BECAUSE IT RETURNS THE LENGTH OF THE ARRAY AND NOT THE ARRAY ITSELF.
+
+     - .reduce((accumulator, currentValue) => {
+         if(currentValue in accumulator){
+             accumulator[currentValue]++;
+         }
+         else {
+             accumulator[currentValue] = 1;
+         }
+         return accumulator;
+        }, {})
+
+    - Note that .map can have '_' as blank as an argument that indicates blank, and it will return an array!
+     - Here it will return an array of array, objects --> [ [{lol}], [{lol2}], [{lol3}] ]
+
+    The obj.map(key => {
+        return [...Array( ..code.. )]
+        .map((_, i) => {
+            return <JSX />
+        }) 
+    })
+
