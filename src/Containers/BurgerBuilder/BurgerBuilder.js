@@ -26,7 +26,9 @@ class BurgerBuilder extends Component {
                 cheese: 0,
                 meat: 0
             },
-            totalPrice: 6
+            totalPrice: 6,
+            /* for button! */
+            checkoutButton: false
         }
     }
 
@@ -55,6 +57,10 @@ class BurgerBuilder extends Component {
                 ingredients: updatedIngredients,
                 totalPrice: updatedPrice
             }, () => {console.log(this.state)});
+        
+        /* I didn't know where to call. I knew it did not work because I never called it until now. */
+        /* Didn't work because the ingredients weren't updated and that I was working with dated information. */
+        this.updatePurchaseState(updatedIngredients);
         }
     }
 
@@ -79,7 +85,33 @@ class BurgerBuilder extends Component {
                 ingredients: updatedIngredients,
                 totalPrice: updatedPrice
             }, () => {console.log(this.state)});
+            
+            this.updatePurchaseState(updatedIngredients);
         }
+    }
+
+    updatePurchaseState = (updatedIngredients) => {
+
+        // Just use the updatedIngredients that is passed
+        /* const ingredients = {
+            // the reason we need to work with dynamic setState is because we might get an OUTDATED state.
+            ...updatedIngredients
+        } */
+        const sum = Object.keys( updatedIngredients )
+
+            /* this returns an array of values */
+            .map(key => {
+                return updatedIngredients[key]
+            })
+
+            /* NOW use reduce,  */
+            .reduce((acc, curr) => {
+                return acc + curr
+            }, 0);
+
+        this.setState({
+            checkoutButton: sum > 0
+        })
     }
 
     render() {
@@ -94,6 +126,7 @@ class BurgerBuilder extends Component {
         /* converting the values of cheese, meat... to boolean values! */
         for (let key in disableLess) {
              /* TRUE to disable button, FALSE to enable button */
+             /* everything before 0, like -1 etc. will set the values to TRUE, disabling button */
             disableLess[key] = disableLess[key] <= 0
         }
 
@@ -110,6 +143,7 @@ class BurgerBuilder extends Component {
         }
         for (let key in disableMore) {
             /* TRUE to disable button, FALSE to enable button */
+            /* everything greater than 2 will disable button */
             disableMore[key] = disableMore[key] > 2
         }
 
@@ -123,6 +157,7 @@ class BurgerBuilder extends Component {
                     disableLess={disableLess}
                     disableMore={disableMore}
                     price={this.state.totalPrice}
+                    purchase={this.state.checkoutButton}
                 />
 
             </Aux>

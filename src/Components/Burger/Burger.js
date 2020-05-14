@@ -104,7 +104,7 @@ const Burger = ( props ) => {
 
    /* If length is 0, change to this prompt! */
    if(ingredientList.length === 0){
-       ingredientList = <h2>Please start adding ingredients!</h2>
+       ingredientList = <p>Please start adding ingredients!</p>
    }
 
     return(

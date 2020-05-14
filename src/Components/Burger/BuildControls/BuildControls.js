@@ -11,7 +11,7 @@ const controls = [
 ];
 
 /* destructure the props please.. I am going to recieve less + more */
-const BuildControls = ({ less, more, disableMore, disableLess, price }) => (
+const BuildControls = ({ less, more, disableMore, disableLess, price, purchase }) => (
     <div className={styles.BuildControls}>
 
         {/* toFixed() fixes the decimal values! Better than the Precision in this case! */}
@@ -36,6 +36,8 @@ const BuildControls = ({ less, more, disableMore, disableLess, price }) => (
                         disableMore={disableMore[type]}
                     />
         })}
+
+        <button disabled={!purchase} className={styles.OrderButton}>ORDER NOW</button>
     </div>
 );
 
