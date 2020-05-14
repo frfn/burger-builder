@@ -135,3 +135,30 @@ Creating Project.
         Grabs the ingredients, then a for loop goes through each one and changes the value to a true or false value
             - it is then passed through components till it hits BuildControl.js and put in 'required={}' inside an HTML button tag
 
+10. Checkout Button
+    checkButton state was added, set to false
+    created <button> tag in Build Controls, added CSS styling,
+
+    CSS: 
+     - new learn:
+         - animation: enable–an argument, .4s–the duration of time, linear–kind of animation
+         - @keyframes enable { percentages mean the loading of animation from 0% to 100% }
+
+    updatePurchaseState() was added, takes in updatedIngredients argument,
+     - called in the methods for adding/deleting ingredients
+     - arg is taken because we were taking in OLD STATE which was giving us enexpected behavior
+
+        uses .map() and .reduce()
+         - .map() to grab the values inside ingredients obj
+         - .reduce() to add the values up
+             - if sum is zero, return false.
+
+    In BuildControls.js 
+     - disabled={!stateOfButton}
+         if TRUE, set disabled, if FALSE, set enabled.
+          since sum IS greater than 0, it will be TRUE, we have to !stateOfButton so it is enabled.
+
+11. Modal + Back Drop + Summary
+    
+
+
