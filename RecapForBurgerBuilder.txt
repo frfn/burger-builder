@@ -159,6 +159,38 @@ Creating Project.
           since sum IS greater than 0, it will be TRUE, we have to !stateOfButton so it is enabled.
 
 11. Modal + Back Drop + Summary
-    
+     BurgerBuilder
+      - Added new state, 'purchaseNow'
+      - Added purchase button METHOD, set 'purchaseNow' to true
+      - Modal takes in the show property to see if button has been clicked
+      - purchaseHandler is passed to BuildControls
+     
+     Modal
+      - Wrapper, takes in 'show' property
+      - It contains the OrderSummary
+      - Has animation from inline styling
+      - The styling hides it away from the page
+      - Without CSS it will display on top of BurgerBuilder.js
+      - That is why the Modal can be coded as is in BurgerBuilder.js
+        (above all the other Components!)
+
+    Order Summary
+     - used .map to return <li> elements
+     - inside are key:value pairs
+     - DO NOT forget to key the <li key={}> items
+     - <span> so we can target the {key} value
+
+    Backdrop
+     - Backdrop is just a DIV that is 100% width/height
+     - it is in the BACK because of the Z-INDEX: 100
+     - MODAL is 500. <-- priority.
+     - I passed in a declineHandler that if you click on Backdrop, set to purchase to false.
+
+    Button Component
+     - Created our own Button Component so we can reuse!
+     - CANCEL button and CONTINUE button in Modal.js
+     - CANCEL does exactly what clicking on the backdrop does
+     - 
+
 
 

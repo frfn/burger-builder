@@ -3,6 +3,8 @@ import Aux from '../../Components/HOC/Aux';
 import Burger from '../../Components/Burger/Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls'
 import PropTypes from 'prop-types'
+import Modal from '../../Components/UI/Modal/Modal'
+import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
 
 /* Make your own project with CONSTANTS. They're so useful. */
 const INGREDIENT_PRICES = {
@@ -28,7 +30,8 @@ class BurgerBuilder extends Component {
             },
             totalPrice: 6,
             /* for button! */
-            checkoutButton: false
+            checkoutButton: false,
+            purchaseNow: false
         }
     }
 
@@ -114,6 +117,18 @@ class BurgerBuilder extends Component {
         })
     }
 
+    purchaseHandler = () => {
+        this.setState({purchaseNow: true});
+    }
+
+    declineHandler = () => {
+        this.setState({purchaseNow: false});
+    }
+
+    continueHandler = () => {
+        alert('You continued!')
+    }
+
     render() {
         /* Copies ingredients object in an immutable way */
         /* 
@@ -147,19 +162,33 @@ class BurgerBuilder extends Component {
             disableMore[key] = disableMore[key] > 2
         }
 
-        const { ingredients } = this.state;
+        const { ingredients, totalPrice, checkoutButton, purchaseNow } = this.state;
         return(
             <Aux>
+                {/* 
+                Modal CAN be here if styled with CSS. Without it, it will block content such
+                as the Burger and BuildControls!
+                 */}
+                <Modal
+                    decline={this.declineHandler}
+                    show={purchaseNow}
+                >
+                    <OrderSummary 
+                        decline={this.declineHandler}
+                        ingredients={ingredients}
+                        checkout={this.continueHandler}
+                    />
+                </Modal>
                 <Burger ingredients={ingredients} />
                 <BuildControls 
                     more={this.AddIngredientHandler}
                     less={this.DeleteIngredientHandler}
                     disableLess={disableLess}
                     disableMore={disableMore}
-                    price={this.state.totalPrice}
-                    purchase={this.state.checkoutButton}
+                    price={totalPrice}
+                    purchase={checkoutButton}
+                    order={this.purchaseHandler}
                 />
-
             </Aux>
         );
     }
