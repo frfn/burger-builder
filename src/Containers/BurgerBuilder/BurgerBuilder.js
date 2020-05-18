@@ -63,7 +63,7 @@ class BurgerBuilder extends Component {
         
         /* I didn't know where to call. I knew it did not work because I never called it until now. */
         /* Didn't work because the ingredients weren't updated and that I was working with dated information. */
-        this.updatePurchaseState(updatedIngredients);
+        this.updateCheckoutButton(updatedIngredients);
         }
     }
 
@@ -89,11 +89,11 @@ class BurgerBuilder extends Component {
                 totalPrice: updatedPrice
             }, () => {console.log(this.state)});
             
-            this.updatePurchaseState(updatedIngredients);
+            this.updateCheckoutButton(updatedIngredients);
         }
     }
 
-    updatePurchaseState = (updatedIngredients) => {
+    updateCheckoutButton = (updatedIngredients) => {
 
         // Just use the updatedIngredients that is passed
         /* const ingredients = {
