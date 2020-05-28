@@ -5,12 +5,17 @@ import styles from '../SideDrawer/SideDrawer.module.css'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 import Aux from '../../HOC/Aux'
 
-const SideDrawer = ( { open, closed, show } ) => {
+const SideDrawer = ( { closed, show } ) => {
+
+    let sideDrawerCSS = [styles.SideDrawer, styles.Close]
+    if ( show ) {
+        sideDrawerCSS = [styles.SideDrawer, styles.Open]
+    }
 
     return(
         <Aux>
             <Backdrop decline={closed} show={show} />
-            <div className={styles.SideDrawer}>
+            <div className={sideDrawerCSS.join(' ')}>
                 <div className={styles.Logo} >
                     <Logo />
                 </div>

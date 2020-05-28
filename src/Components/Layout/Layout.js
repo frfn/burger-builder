@@ -11,7 +11,7 @@ class Layout extends Component {
         super(props);
 
         this.state = {
-            showSideDrawer: true
+            showSideDrawer: false
         }
     }
 
@@ -25,7 +25,17 @@ class Layout extends Component {
     //     this.setState({
     //         showSideDrawer: true
     //     }, () => {console.log('i am opened')});
-    // }
+    // } This is totally fine, how I approached it.
+
+    // since we depend on the current state! .. using the state from this.state is UNSTABLE because of its async nature.
+    sideDrawerOpenHandler = () => {
+        this.setState((prevState) => {
+            return {
+                showSideDrawer: !prevState.showSideDrawer
+            }
+        })
+    
+    }
     
     render () {
 
@@ -36,13 +46,14 @@ class Layout extends Component {
             <Aux>
                 {console.log(this.state.showSideDrawer)}
 
-                <Toolbar />
+                <Toolbar 
+                    drawerToggleClicked={this.sideDrawerOpenHandler}
+                />
 
-                { showSideDrawer ? <SideDrawer 
-                    // opened={this.sideDrawerOpenHandler}
+                 <SideDrawer 
                     closed={this.sideDrawerClosedHandler}
                     show={showSideDrawer}
-                /> : null}
+                />
                 
                 {/* BurgerBuilder will be in this <main> tag */}
                 {/* HTML Semantic Elements */}

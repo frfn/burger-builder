@@ -237,5 +237,20 @@ Creating Project.
          - Error on my part, I passed in a method, and not the value from state. D'oh.
          - I am leaving on creating logic to show sidebar or not. 
 
-        
+     - The logic I created works great, just didn't implement the CSS.
+         - Created a 'let' variable to hold a list of styles.Classes, then use .join(' ' ) to use as a className
+         - .Open & .Close animation plays
+         - Created DrawerToggle folder --> DrawerToggle.js
+             - Created a DIV element with onClick function
+             - Function is passed from Layout.js 
+                 - It changes showSideDrawer boolean value to 'true' since it is !prevState.showSideDrawer
+             - When clicked, the CSS animation pushed the SideDrawer out
 
+     - Side Drawer animation plus functionality all is dependant on CSS. Period.
+         - The transition of it coming out, going back in.
+             - transform property
+         - DrawerToggle button disappearing
+             - @media property 
+             - display: none property
+
+14. Focusing on PropTypes & the React Lifecycle Methods (componentDidMount, shouldComponentUpdate, componentDidUpdate, componentWillUnmount)
