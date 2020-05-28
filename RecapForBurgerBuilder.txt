@@ -254,3 +254,16 @@ Creating Project.
              - display: none property
 
 14. Focusing on PropTypes & the React Lifecycle Methods (componentDidMount, shouldComponentUpdate, componentDidUpdate, componentWillUnmount)
+     - PropTypes
+        - PropTypes are mainly used when working on 3rd party library, developer team applications, people that will be using the application
+        - So in current Burger App, not much PropTypes are needed
+
+     - Lifecycle Methods
+         - Using componentDidUpdate for OrderSummary.js, checking to see if we rerender every time an order changes
+
+         - Using shouldComponentUpdate in Modal.js
+
+15. Wrap Up
+     - Changing Folder Structure which is optional
+         - Layout.js is argued as an HOC component since it just wraps other components up, though, I think it's still just a component -- though I do agree ... could be in both folders
+     - I downloaded all the resources already :D

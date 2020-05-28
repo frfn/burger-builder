@@ -64,7 +64,7 @@ const Burger = ( props ) => {
             // NOT [[element]] !! Notice the two brackets.
         }, []);
 
-        console.log(ingredientList)
+        // console.log(ingredientList)
     
 
 // ------------------------------------------------------------------------------------------------------------        

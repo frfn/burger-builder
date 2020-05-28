@@ -44,7 +44,7 @@ class Layout extends Component {
 
         return (
             <Aux>
-                {console.log(this.state.showSideDrawer)}
+                {/* {console.log(this.state.showSideDrawer)} */}
 
                 <Toolbar 
                     drawerToggleClicked={this.sideDrawerOpenHandler}
