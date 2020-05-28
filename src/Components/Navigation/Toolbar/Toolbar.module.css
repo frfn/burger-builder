@@ -1,0 +1,33 @@
+.Toolbar {
+    height: 56px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #703B09;
+    /* vertical | horizontal */
+    padding: 0 20px;
+    /* border box makes sure that the pixels are IN the box, content box does not care and overlaps */
+    box-sizing: border-box; 
+    /* backdrop is 100, so this is behind backdrop */
+    z-index: 90; 
+
+    /* flex properties */
+    display: flex;
+    justify-content: space-between; /* horizontal */
+    align-items: center; /* vertical */
+}
+
+.Toolbar nav {
+    height: 100%;
+}
+
+.Logo {
+    height: 80%;
+}
+
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
+}

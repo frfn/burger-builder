@@ -190,7 +190,52 @@ Creating Project.
      - Created our own Button Component so we can reuse!
      - CANCEL button and CONTINUE button in Modal.js
      - CANCEL does exactly what clicking on the backdrop does
-     - 
+     
+12. Toolbar
+     - Created Navigation folder in Components folder
+     - Toolbar.js + CSS
+     - Very simple in the beginning
+     - Imported to Layout.js
+     - Changed CSS in Layout CSS because Toolbar overlaps Burger component
+     
+    Logo 
+     - Downloaded burger-logo.png from Udemy
+     - Created Logo folder and Logo.js AND CSS + created folder in Assets --> Images
+     - Drag PNG to Images
+     - In Toolbar.js, imported the logo!
+
+    Navigation Items
+     - This is a <ul> element that will include the NavigationItem component
+     - CSS has been added
+     - Added to Toolbars.js
+
+        - NavigationItem.js 
+         - <li> element with some CSS
+         - will go inside NavigationItems.js 
+         - .active is a class in CSS!
 
 
+13. Side Drawer: We click on Menu, should bring out a side drawer
+     - Creating side drawer component
+         - important code is the CSS 'transform' transition
+         - SideDrawer.js is in Layout.js, not in Toolbar.js
+
+     - Responsive changes through CSS
+         - Changed height back to 100% for the Logo
+         - in respective CSS, changes the .Logo height to preferred
+            - User error b/c I had different resolution size (ex. 375 x 667)
+            - User error b/c I changed the Layout.module.css to 48px --> 75px .. burger touched border of Toolbar
+
+    
+     - Adjust NavigationItems.module.css
+         - Main focus is Mobile View so in NavigationItem.js, I changed the base CSS, added an @media query for Desktop View
+         - Fixed some CSS for SideDrawer, Toolbar, NavigationItem + NavigationItems
+    
+     - Adding backdrop when SideDrawer.js is opened for Mobile Device
+         - When adding, there has to be a state to see if the SideDrawer has been toggled...
+           so... we made Layout.js into a stateful component/class component
+         - Error on my part, I passed in a method, and not the value from state. D'oh.
+         - I am leaving on creating logic to show sidebar or not. 
+
+        
 

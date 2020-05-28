@@ -174,6 +174,7 @@ class BurgerBuilder extends Component {
                     show={purchaseNow}
                 >
                     <OrderSummary 
+                        price={totalPrice}
                         decline={this.declineHandler}
                         ingredients={ingredients}
                         checkout={this.continueHandler}
