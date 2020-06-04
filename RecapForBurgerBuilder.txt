@@ -31,10 +31,10 @@ Burger Builder
                                         --> Nav items
 
                                     --> Side drawer
-                                        -->
+                                        --> Nav items
 
                                     --> Backdrop
-                                        -->
+                                        --> Opaque Div, when clicked should remove DIV, display: none
 
                                     --> Props + Children
                                         --> Burger Builder (Stateful/Container Class)
@@ -83,7 +83,7 @@ Creating Project.
 6. Burger Overview
     How is it working?
      - App.js --> Layout.js --> BurgerBuilder.js --> Burger.js --> BurgerIngredients.js
-        BurgerIngredients.js returns DIVs that are styled, colors and shap has been altered from a rectangle.
+        BurgerIngredients.js returns DIVs that are styled, colors and shape has been altered from a rectangle.
 
 7. Burger Overview Pt. II
     Burger has an interesting tranformation array (by Max), makes sense, confusing to follow tbh for people that doesn't know JS.
@@ -126,7 +126,7 @@ Creating Project.
                 - FUNCTION takes in argument, grabs the value by this.state.ingredients[type]
                 - conditional was created later
                 - spread operator was used and the dynamic bracket notation were used
-                - price is changed, and I used a Object to keep track of the of price for each item
+                - price is changed, and I used a Constant Object to keep track of the of price for each item
                 - simple calculation of oldPrice + priceOfItem
                 - this.setState({...})
 
@@ -168,9 +168,9 @@ Creating Project.
      Modal
       - Wrapper, takes in 'show' property
       - It contains the OrderSummary
-      - Has animation from inline styling
-      - The styling hides it away from the page
-      - Without CSS it will display on top of BurgerBuilder.js
+      - Has animation from inline styling (CSS inside file)
+      - The styling hides it away from the page (if not CSS coded, it will show on document view)
+      - Without CSS it will display on top of BurgerBuilder.js components
       - That is why the Modal can be coded as is in BurgerBuilder.js
         (above all the other Components!)
 
@@ -215,7 +215,7 @@ Creating Project.
          - .active is a class in CSS!
 
 
-13. Side Drawer: We click on Menu, should bring out a side drawer
+13. Side Drawer: We click on Menu, should bring out a side drawer (it is just a DIV, with a logo and HREF elements)
      - Creating side drawer component
          - important code is the CSS 'transform' transition
          - SideDrawer.js is in Layout.js, not in Toolbar.js
@@ -223,22 +223,22 @@ Creating Project.
      - Responsive changes through CSS
          - Changed height back to 100% for the Logo
          - in respective CSS, changes the .Logo height to preferred
-            - User error b/c I had different resolution size (ex. 375 x 667)
+            - User error b/c I had different resolution size (ex. 375 x 667 in  Google Preview - Inpspect Code)
             - User error b/c I changed the Layout.module.css to 48px --> 75px .. burger touched border of Toolbar
 
     
      - Adjust NavigationItems.module.css
-         - Main focus is Mobile View so in NavigationItem.js, I changed the base CSS, added an @media query for Desktop View
+         - Main focus is Mobile View ** so in NavigationItem.js, I changed the base CSS, added an @media query for Desktop View
          - Fixed some CSS for SideDrawer, Toolbar, NavigationItem + NavigationItems
     
      - Adding backdrop when SideDrawer.js is opened for Mobile Device
          - When adding, there has to be a state to see if the SideDrawer has been toggled...
            so... we made Layout.js into a stateful component/class component
-         - Error on my part, I passed in a method, and not the value from state. D'oh.
+         - Error on my part, long struggle actually, I passed in a method, and not the value from state. D'oh.
          - I am leaving on creating logic to show sidebar or not. 
 
      - The logic I created works great, just didn't implement the CSS.
-         - Created a 'let' variable to hold a list of styles.Classes, then use .join(' ' ) to use as a className
+         - Created a 'let' variable to hold a list of styles.Classes, then use .join(' ') to use as a className
          - .Open & .Close animation plays
          - Created DrawerToggle folder --> DrawerToggle.js
              - Created a DIV element with onClick function
@@ -262,8 +262,9 @@ Creating Project.
          - Using componentDidUpdate for OrderSummary.js, checking to see if we rerender every time an order changes
 
          - Using shouldComponentUpdate in Modal.js
+             - This checks whether if the user has clicked on Order Now button, 'show' is a boolean value that when click, will animate the modal to drop down (CSS), clicking Order Now sets boolean value to True, clicking Cancel or Transparent DIV (Backdrop) will set to False
 
-15. Wrap Up
+15. Wrapping Up App Build
      - Changing Folder Structure which is optional
          - Layout.js is argued as an HOC component since it just wraps other components up, though, I think it's still just a component -- though I do agree ... could be in both folders
      - I downloaded all the resources already :D

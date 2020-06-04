@@ -61,9 +61,9 @@ class BurgerBuilder extends Component {
                 totalPrice: updatedPrice
             }); // , () => {console.log(this.state)}
         
-        /* I didn't know where to call. I knew it did not work because I never called it until now. */
-        /* Didn't work because the ingredients weren't updated and that I was working with dated information. */
-        this.updateCheckoutButton(updatedIngredients);
+            /* I didn't know where to call. I knew it did not work because I never called it until now. */
+            /* Didn't work because the ingredients weren't updated and that I was working with dated information. */
+            this.updateCheckoutButton(updatedIngredients);
         }
     }
 
