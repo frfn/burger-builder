@@ -268,3 +268,8 @@ Creating Project.
      - Changing Folder Structure which is optional
          - Layout.js is argued as an HOC component since it just wraps other components up, though, I think it's still just a component -- though I do agree ... could be in both folders
      - I downloaded all the resources already :D
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+NEW SECTION: DATA BASE.

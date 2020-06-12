@@ -12,6 +12,7 @@
     border-radius: 0 0 30px 30px;
 
     /* inset ADDS a shadow on top of shape */
+    /* inset | offset-x | offset-y | color */
     box-shadow: inset -15px 0 #c15711;
 
     /* vertical | horizontal */
