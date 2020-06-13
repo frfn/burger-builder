@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import Modal from '../../Components/UI/Modal/Modal'
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
 
+import axios from '../../axios-order'
+
 /* Make your own project with CONSTANTS. They're so useful. */
 const INGREDIENT_PRICES = {
     salad: .5,
@@ -126,7 +128,34 @@ class BurgerBuilder extends Component {
     }
 
     continueHandler = () => {
-        alert('You continued!')
+        // alert('You continued!')
+        const order = {
+            ingredients: this.state.ingredients,
+            totatlPrice: this.state.totalPrice,
+            customer: {
+                name: 'Flex',
+                address: {
+                    street: '100 State Street',
+                    zipCode: '02130',
+                    country: 'USA'
+                },
+                email: 'flex@flex.com'
+            },
+            deliveryMethod: 'car' 
+        }
+
+        axios.post('/orders.json', order)
+            .then(response => {
+                console.log(response)
+                alert('Order Placed!')
+            })
+            .catch(error => {
+                console.log(error)
+                alert('Oops, something went wrong!')
+            })
+
+            this.setState({purchaseNow: false});
+
     }
 
     render() {

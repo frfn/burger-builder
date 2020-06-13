@@ -289,4 +289,21 @@ NEW SECTION: DATA BASE.
     - did not create a GLOBAL baseURL because I will be using another instance for Authorization
     
 4. Sending POST requests!
+    - import the axios instance that was created
+        - import axios from 'loc-of-axios-instance'
+
+    - Note that you need .json extension for Firebase Database to work, its like a MongoDB
+        - axios.post('name.json')
+        - created the order object filled with different properties
+            - includes the price + ingredients
+
+    - Side Note: 
+        - Calculate Price IN the server to make sure the user is NOT manipulating the code and changing the price of order!
+        - Having totalPrice in the order object would not be the real setup, recalculate the price ON the server
+
+    - On Firebase, the 'orders' data was automatically made 
+        - the axios 'post' method had '/orders' as the argument
+        - the orders are now in the database
+
+5. Spinner for sending a request!
     - 
