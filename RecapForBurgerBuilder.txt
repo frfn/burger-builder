@@ -273,3 +273,20 @@ Creating Project.
 ------------------------------------------------------------------------------------------------------------------------
 
 NEW SECTION: DATA BASE.
+
+1. Installed Axios
+
+2. Created Firebase account
+    - Go to console
+    - created new project
+        - Realtime Database NOT, Firestore
+        - Now we have the URL for the Database
+            - The DB logic has already been created for me
+            https://react-my-burger-b4a98.firebaseio.com/
+
+3. Create Axios instance
+    - axios.create({ baseURL: 'url-string'})
+    - did not create a GLOBAL baseURL because I will be using another instance for Authorization
+    
+4. Sending POST requests!
+    - 
