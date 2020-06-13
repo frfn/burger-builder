@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Modal from '../../Components/UI/Modal/Modal'
 import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
 
+import Spinner from '../../Components/UI/Spinner/Spinner';
 import axios from '../../axios-order'
 
 /* Make your own project with CONSTANTS. They're so useful. */
@@ -33,7 +34,8 @@ class BurgerBuilder extends Component {
             totalPrice: 6,
             /* for button! */
             checkoutButton: false,
-            purchaseNow: false
+            purchaseNow: false,
+            loading: false
         }
     }
 
@@ -129,6 +131,10 @@ class BurgerBuilder extends Component {
 
     continueHandler = () => {
         // alert('You continued!')
+
+        // loading CSS will appear
+        this.setState( { loading: true } );
+
         const order = {
             ingredients: this.state.ingredients,
             totatlPrice: this.state.totalPrice,
@@ -144,17 +150,14 @@ class BurgerBuilder extends Component {
             deliveryMethod: 'car' 
         }
 
+        /* You can comment this out so that the CSS spinner shows! */
         axios.post('/orders.json', order)
             .then(response => {
-                console.log(response)
-                alert('Order Placed!')
+                this.setState({ purchaseNow: false, loading: false })
             })
             .catch(error => {
-                console.log(error)
-                alert('Oops, something went wrong!')
+                this.setState({ purchaseNow: false, loading: false })
             })
-
-            this.setState({purchaseNow: false});
 
     }
 
@@ -191,6 +194,17 @@ class BurgerBuilder extends Component {
             disableMore[key] = disableMore[key] > 2
         }
 
+        let orderSummary = <OrderSummary 
+                price={this.state.totalPrice}
+                decline={this.declineHandler}
+                ingredients={this.state.ingredients}
+                checkout={this.continueHandler}
+            />
+        
+        if ( this.state.loading ) {
+            orderSummary = <Spinner />
+        }
+
         const { ingredients, totalPrice, checkoutButton, purchaseNow } = this.state;
         return(
             <Aux>
@@ -202,12 +216,7 @@ class BurgerBuilder extends Component {
                     decline={this.declineHandler}
                     show={purchaseNow}
                 >
-                    <OrderSummary 
-                        price={totalPrice}
-                        decline={this.declineHandler}
-                        ingredients={ingredients}
-                        checkout={this.continueHandler}
-                    />
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients={ingredients} />
                 <BuildControls 

@@ -306,4 +306,11 @@ NEW SECTION: DATA BASE.
         - the orders are now in the database
 
 5. Spinner for sending a request!
-    - 
+    - CSS Spinner on Google and I just reused the code!
+    - Created Spinner Folder in UI folder in Components
+        - Created js file + css file with the spinner code
+    - Logic has been created for the Spinner in BurderBuilder.js
+        - New key added: 'loading: false'
+        - {orderSummary} now is a conditional component
+
+6. 

@@ -9,7 +9,8 @@ class Modal extends Component {
 
     /* checks to see if 'show' variable (boolean value) changes, if it does, then rerender */
     shouldComponentUpdate( nextProps, nextState) {
-        return nextProps.show !== this.props.show
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
+
     }
 
     /* snapshot takes info from getSnapshotBeforeUpdate(prevProps, prevState) method, returns an object. Look at part4 folder, and see the classes that  */
