@@ -312,5 +312,8 @@ NEW SECTION: DATA BASE.
     - Logic has been created for the Spinner in BurderBuilder.js
         - New key added: 'loading: false'
         - {orderSummary} now is a conditional component
+    - Changed the Modal.js file
+        - shouldComponentUpdate also takes into account the children
 
-6. 
+6. Handling Errors
+    - 
