@@ -8,6 +8,7 @@ import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
 
 import Spinner from '../../Components/UI/Spinner/Spinner';
 import axios from '../../axios-order'
+import withErrorHandler from '../../Components/HOC/withErrorHandler/withErrorHandler'
 
 /* Make your own project with CONSTANTS. They're so useful. */
 const INGREDIENT_PRICES = {
@@ -25,18 +26,37 @@ class BurgerBuilder extends Component {
         /* this. must be there because we are in a method! (constructor) */
         this.state = {
             /* inside ingredients will change */
-            ingredients: {
-                salad: 0,
-                bacon: 0,
-                cheese: 0,
-                meat: 0
-            },
+            ingredients: null,
+            //{
+            //    salad: 0,
+            //    bacon: 0,
+            //    cheese: 0,
+            //   meat: 0
+            //},
             totalPrice: 6,
             /* for button! */
             checkoutButton: false,
             purchaseNow: false,
-            loading: false
+            loading: false,
+            error: false
         }
+    }
+
+    // .json is SUPER IMPORTANT, IT MUST be there.
+    componentDidMount() {
+        axios.get('https://react-my-burger-b4a98.firebaseio.com/ingredients.json')
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    ingredients: response.data
+                })
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    error: true
+                })
+            });
     }
 
     /* methods to increase ingredients here... pass it to the build control. */
@@ -162,6 +182,8 @@ class BurgerBuilder extends Component {
     }
 
     render() {
+        const { ingredients, totalPrice, checkoutButton, purchaseNow } = this.state;
+
         /* Copies ingredients object in an immutable way */
         /* 
         It will always start at HERE, THEN changes the button!
@@ -194,18 +216,39 @@ class BurgerBuilder extends Component {
             disableMore[key] = disableMore[key] > 2
         }
 
-        let orderSummary = <OrderSummary 
-                price={this.state.totalPrice}
-                decline={this.declineHandler}
-                ingredients={this.state.ingredients}
-                checkout={this.continueHandler}
-            />
+        let orderSummary = null 
+
+        // since ingredients
+        let burger = this.state.error ? <p>Ingredients can not be loaded!</p> : <Spinner />
         
+        if ( this.state.ingredients ){
+            burger = 
+            <Aux>
+                <Burger ingredients={ingredients} />
+                <BuildControls 
+                    more={this.AddIngredientHandler}
+                    less={this.DeleteIngredientHandler}
+                    disableLess={disableLess}
+                    disableMore={disableMore}
+                    price={totalPrice}
+                    purchase={checkoutButton}
+                    order={this.purchaseHandler}
+                />
+            </Aux>
+
+            orderSummary = 
+                <OrderSummary 
+                    price={this.state.totalPrice}
+                    decline={this.declineHandler}
+                    ingredients={this.state.ingredients}
+                    checkout={this.continueHandler}
+                />
+        }
+
         if ( this.state.loading ) {
             orderSummary = <Spinner />
         }
 
-        const { ingredients, totalPrice, checkoutButton, purchaseNow } = this.state;
         return(
             <Aux>
                 {/* 
@@ -218,16 +261,7 @@ class BurgerBuilder extends Component {
                 >
                     {orderSummary}
                 </Modal>
-                <Burger ingredients={ingredients} />
-                <BuildControls 
-                    more={this.AddIngredientHandler}
-                    less={this.DeleteIngredientHandler}
-                    disableLess={disableLess}
-                    disableMore={disableMore}
-                    price={totalPrice}
-                    purchase={checkoutButton}
-                    order={this.purchaseHandler}
-                />
+                {burger}
             </Aux>
         );
     }
@@ -237,4 +271,4 @@ BurgerBuilder.propTypes = {
     type: PropTypes.string
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);

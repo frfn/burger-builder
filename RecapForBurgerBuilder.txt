@@ -316,4 +316,40 @@ NEW SECTION: DATA BASE.
         - shouldComponentUpdate also takes into account the children
 
 6. Handling Errors
-    - 
+    - created folder withErrorHandling
+        - HOC that wraps the BurgerBuilder
+        - contains the error Handling
+        - axios...use(null, error => {})
+            - first argument: response config
+            - second argument: error 
+
+7. Requesting information FROM Firebase
+    - Created ingredients folder
+        - added the ingredients manually and value is 0
+        - creating componentDidMount and fetching data from server
+    -  Nulled ingredients
+        - getting information from server
+        - errors are happening because ingredients is ON the server,
+          so ONLY when the ingredient has data, then grab the information
+            - if ( this.state.ingredients ) is all you need
+
+    - no .json from get method?
+        - reason is in the withErrorHandler.js
+            - lifecycle componentDidMount is the issue
+                - Lifecycle
+                    - constructor(props)
+                    - componentWillMount
+                    - render ()
+                    - Render CHILD Components
+                    - componentDidMount
+
+            - withErrorHandler's child is BurderBuilder.js
+                - BurgerBuilder ALSO has a componentDidMount
+                    - to retreive the ingredients
+                - Then only does withErrorHandler will call componentDidMount
+                    - which is a problem since there is nothing to intercept
+                - ERROR still happens because of unhandled rejection
+                    - add .catch in BurgerBuilder.js
+                    - adding error prop in state
+    
+    - MORAL: YOU MUST put .json in the url!
