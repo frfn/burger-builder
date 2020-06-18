@@ -7,7 +7,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         constructor(props){
             super(props);
             // use must wrtie like this though you don't need to use req variable
-            axios.interceptors.request.use(req => {
+            this.reqInterceptor = axios.interceptors.request.use(req => {
                 this.setState({
                     error: null
                 })
@@ -17,7 +17,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             // error is coming from Firebase
             // res => res is just return the response
             // - it is the shortest way to return something
-            axios.interceptors.response.use(res => res, error => {
+            this.resInterceptor = axios.interceptors.response.use(res => res, error => {
                 this.setState({
                     error: error
                 })
@@ -26,6 +26,11 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         state = {
             error: null
+        }
+
+        componentWillUnmount () {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
         }
 
 

@@ -353,3 +353,13 @@ NEW SECTION: DATA BASE.
                     - adding error prop in state
     
     - MORAL: YOU MUST put .json in the url!
+
+8. Cleaning up and removing interceptors
+    - this.varName = axios...
+        - this.varName is global and that is why it is prefixed with 'this'
+            .. for THIS component, it will have this state
+        - created reqInterceptor and resInterceptor so I can unmount
+
+    - Used componentWillUnmount for deleting (ejecting) interceptors so I can prevent memory leaks
+
+
