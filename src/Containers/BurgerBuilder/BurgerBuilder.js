@@ -33,7 +33,7 @@ class BurgerBuilder extends Component {
             //    cheese: 0,
             //   meat: 0
             //},
-            totalPrice: 6,
+            totalPrice: null,
             /* for button! */
             checkoutButton: false,
             purchaseNow: false,
@@ -46,7 +46,6 @@ class BurgerBuilder extends Component {
     componentDidMount() {
         axios.get('https://react-my-burger-b4a98.firebaseio.com/ingredients.json')
             .then(response => {
-                console.log(response)
                 this.setState({
                     ingredients: response.data
                 })
@@ -57,6 +56,35 @@ class BurgerBuilder extends Component {
                     error: true
                 })
             });
+
+        /* Created by me ... was getting an error in pricing in client side when changing the value server side! Ex. 1 burger = $1.00, does NOT reflect when changed in server side. */
+        axios.get('https://react-my-burger-b4a98.firebaseio.com/totalPrice.json')
+            .then(response => {
+                console.log(response);
+
+                /* $6 */
+                let totalPriceFromDatabase = response.data
+        
+                if(this.state.ingredients){
+                    let updatedPrice = Object.keys(this.state.ingredients)
+                        .reduce((accumulator, ingredientKey) => {
+                            const price = INGREDIENT_PRICES[ingredientKey]
+                            const total = price * this.state.ingredients[ingredientKey]
+
+                            return accumulator + total
+                        }, totalPriceFromDatabase)
+
+                        this.setState({
+                            totalPrice: updatedPrice
+                        }, () => {console.log(updatedPrice)})
+                }
+            })
+            .catch(error => {
+                this.setState({
+                    error: true
+                })
+            })
+            
     }
 
     /* methods to increase ingredients here... pass it to the build control. */
@@ -271,4 +299,6 @@ BurgerBuilder.propTypes = {
     type: PropTypes.string
 }
 
+/* BurgerBuilder is passed into withErrorHandler, which just adds a modal that explains an error if occurs,
+axios is passed because it will be used to intercept request/response and see if any error, if error occurs, show in Modal */
 export default withErrorHandler(BurgerBuilder, axios);

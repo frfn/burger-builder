@@ -351,15 +351,49 @@ NEW SECTION: DATA BASE.
                 - ERROR still happens because of unhandled rejection
                     - add .catch in BurgerBuilder.js
                     - adding error prop in state
+                - withErrorHandler is a class that wraps the BurgerBuilder.js and adds 
+                  a modal with the error. It does not keep reloading, it's loaded right away!
+                  BurgerBuilder.js is the CHILD of it, the WrappedComponent!
     
     - MORAL: YOU MUST put .json in the url!
 
 8. Cleaning up and removing interceptors
-    - this.varName = axios...
-        - this.varName is global and that is why it is prefixed with 'this'
-            .. for THIS component, it will have this state
+    - this.reqInterceptor = axios.interceptors.request.use(req => {
+                this.setState({
+                    error: null
+                })
+                return req;
+            })
+        - this.reqInterceptor is global and that is why it is prefixed with 'this'
+            .. for this CURRENT (singular) component, it will have this state
         - created reqInterceptor and resInterceptor so I can unmount
+        - axios.interceptors.request.eject(this.reqInterceptor);
+            - eject removes the interceptors!
 
     - Used componentWillUnmount for deleting (ejecting) interceptors so I can prevent memory leaks
+    - Cleaning up is important so that the app is more efficient and does create multiple useless interceptor
 
+9. Routing
+    - React is a component creation library
+    - Routing 'makes' it into framework because of it's SPA properties
+        - Show different page to users
+        - Multiple different pages
+            - about
+            - login
+            - content
+            - etc.
+        - SPA: Single Page Application
+            - /
+            - /blog
+            - /blog/post/1
+            - these are NOT seperate HTML files, they are rerendered Single Page
+            - JavaScript rerender parts of the Single Page, or all of it!
+    - Adding Routing Package
+        - parse URL / path
+        - developer configures different paths
+        - Routing package reads the config
+        - Render / Load the JSX/component code!
+    - That is all.
 
+    HOW TO USE:
+        Check the routing exercises in Udemy folder!

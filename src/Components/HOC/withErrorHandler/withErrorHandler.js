@@ -6,6 +6,11 @@ const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
         constructor(props){
             super(props);
+
+            this.state = {
+                error: null
+            }
+
             // use must wrtie like this though you don't need to use req variable
             this.reqInterceptor = axios.interceptors.request.use(req => {
                 this.setState({
@@ -22,10 +27,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
                     error: error
                 })
             })
-        }
-
-        state = {
-            error: null
         }
 
         componentWillUnmount () {
