@@ -15,7 +15,7 @@ class Modal extends Component {
 
     /* snapshot takes info from getSnapshotBeforeUpdate(prevProps, prevState) method, returns an object. Look at part4 folder, and see the classes that  */
     componentWillUpdate( prevState, prevProps, snaphot ) {
-        console.log('[Modal] will update!')
+        // console.log('[Modal] will update!')
     }
 
     render() {

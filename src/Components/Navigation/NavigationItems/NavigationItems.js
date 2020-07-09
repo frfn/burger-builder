@@ -8,7 +8,7 @@ const NavigationItems = () => (
     /* Take note that this is a UL element, NavigationItem is a LI element */
     <ul className={styles.NavigationItems}>
         {/* for boolean values, just pass in without assigning! */}
-        <NavigationItem link="/burgerbuilder" active>Burger Builder</NavigationItem>
+        <NavigationItem link="/" active>Burger Builder</NavigationItem>
         <NavigationItem link="/checkout">Checkout</NavigationItem>
     </ul>
 );

@@ -397,3 +397,41 @@ NEW SECTION: DATA BASE.
 
     HOW TO USE:
         Check the routing exercises in Udemy folder!
+
+------------------------------
+
+Routing + Checkout Page
+
+1. Create the components + CSS (module) 
+    - CSS tip: center or 100% centers objects
+    - CheckoutSummary.js 
+    - Checkout.js
+
+2. Checkout.js in App.js
+
+3. Setting up Routing
+    - Index.js -- BrowserRouter
+    - App.js   -- Route
+
+4. Changing continueHandler() in BurgerBuilder.js
+    - commenting out the code that POSTs the information to Firebase
+    Side Note:
+        - Burger.js does NOT contain the Router properties because it is NOT loaded through a Route object.
+            Fix: add an HOC wrapper from react dom router, export default withRouter(Burger)
+    - this.props.history.push('/checkout'); routes to the checkout page
+
+5. Routing in Checkout.js -- two methods that .goBack() and .replace() the current page
+
+6. Grabbing ingredient info from query params!
+    - BurgerBuilder.js -- continueHandler() -- pushed info through search params
+    - Checkout.js -- using cDMount() to parse data -- used 'new URLSearchParams()' to split the information up
+
+7. Adding forms -- ContactData.js in Containers/Checkout folder
+    - Added dynamic handlers
+    - <Form>
+    - the query params are gone when page is refreshed and the burger is gone,
+        but when you build from the start, the state is NOT lost and it does NOT rerender the component!
+    - Added CSS for the FORM, looks like it is INSIDE a box now
+
+8. ORDER SUBMISSION (tricky?)
+    - 

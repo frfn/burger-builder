@@ -1,233 +1,271 @@
-import React, { Component } from 'react'
-import Aux from '../../Components/HOC/Aux';
-import Burger from '../../Components/Burger/Burger';
-import BuildControls from '../../Components/Burger/BuildControls/BuildControls'
-import PropTypes from 'prop-types'
-import Modal from '../../Components/UI/Modal/Modal'
-import OrderSummary from '../../Components/Burger/OrderSummary/OrderSummary';
+import React, { Component } from "react";
+import Aux from "../../Components/HOC/Aux";
+import Burger from "../../Components/Burger/Burger";
+import BuildControls from "../../Components/Burger/BuildControls/BuildControls";
+import PropTypes from "prop-types";
+import Modal from "../../Components/UI/Modal/Modal";
+import OrderSummary from "../../Components/Burger/OrderSummary/OrderSummary";
 
-import Spinner from '../../Components/UI/Spinner/Spinner';
-import axios from '../../axios-order'
-import withErrorHandler from '../../Components/HOC/withErrorHandler/withErrorHandler'
+import Spinner from "../../Components/UI/Spinner/Spinner";
+import axios from "../../axios-order";
+import withErrorHandler from "../../Components/HOC/withErrorHandler/withErrorHandler";
 
 /* Make your own project with CONSTANTS. They're so useful. */
 const INGREDIENT_PRICES = {
-    salad: .5,
-    cheese: .5,
-    meat: 1.5,
-    bacon: 1
-}
+	salad: 0.5,
+	cheese: 0.5,
+	meat: 1.5,
+	bacon: 1,
+};
 
 /* This is a Stateful Class. It is in Container folder. */
 class BurgerBuilder extends Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        /* this. must be there because we are in a method! (constructor) */
-        this.state = {
-            /* inside ingredients will change */
-            ingredients: null,
-            //{
-            //    salad: 0,
-            //    bacon: 0,
-            //    cheese: 0,
-            //   meat: 0
-            //},
-            totalPrice: null,
-            /* for button! */
-            checkoutButton: false,
-            purchaseNow: false,
-            loading: false,
-            error: false
-        }
-    }
+		/* this. must be there because we are in a method! (constructor) */
+		this.state = {
+			/* inside ingredients will change */
+			ingredients: null,
+			//{
+			//    salad: 0,
+			//    bacon: 0,
+			//    cheese: 0,
+			//   meat: 0
+			//},
+			totalPrice: null,
+			/* for button! */
+			checkoutButton: false,
+			purchaseNow: false,
+			loading: false,
+			error: false,
+		};
+	}
 
-    // .json is SUPER IMPORTANT, IT MUST be there.
-    componentDidMount() {
-        axios.get('https://react-my-burger-b4a98.firebaseio.com/ingredients.json')
-            .then(response => {
-                this.setState({
-                    ingredients: response.data
-                })
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({
-                    error: true
-                })
-            });
+	// .json is SUPER IMPORTANT, IT MUST be there.
+	componentDidMount() {
+		// console.log(this.props) I wanted to test if the Router Properties are being passed
 
-        /* Created by me ... was getting an error in pricing in client side when changing the value server side! Ex. 1 burger = $1.00, does NOT reflect when changed in server side. */
-        axios.get('https://react-my-burger-b4a98.firebaseio.com/totalPrice.json')
-            .then(response => {
-                console.log(response);
+		axios
+			.get(
+				"https://react-my-burger-b4a98.firebaseio.com/ingredients.json"
+			)
+			.then((response) => {
+				this.setState({
+					ingredients: response.data,
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+				this.setState({
+					error: true,
+				});
+			});
 
-                /* $6 */
-                let totalPriceFromDatabase = response.data
-        
-                if(this.state.ingredients){
-                    let updatedPrice = Object.keys(this.state.ingredients)
-                        .reduce((accumulator, ingredientKey) => {
-                            const price = INGREDIENT_PRICES[ingredientKey]
-                            const total = price * this.state.ingredients[ingredientKey]
+		/* Created by me ... was getting an error in pricing in client side when changing the value server side! Ex. 1 burger = $1.00, does NOT reflect when changed in server side. */
+		axios
+			.get("https://react-my-burger-b4a98.firebaseio.com/totalPrice.json")
+			.then((response) => {
+				// console.log(response);
 
-                            return accumulator + total
-                        }, totalPriceFromDatabase)
+				/* $6 */
+				let totalPriceFromDatabase = response.data;
 
-                        this.setState({
-                            totalPrice: updatedPrice
-                        }, () => {console.log(updatedPrice)})
-                }
-            })
-            .catch(error => {
-                this.setState({
-                    error: true
-                })
-            })
-            
-    }
+				if (this.state.ingredients) {
+					let updatedPrice = Object.keys(
+						this.state.ingredients
+					).reduce((accumulator, ingredientKey) => {
+						const price = INGREDIENT_PRICES[ingredientKey];
+						const total =
+							price * this.state.ingredients[ingredientKey];
 
-    /* methods to increase ingredients here... pass it to the build control. */
-    /* Follow LOGIC of how the argument is PASSED through different components. */
-    AddIngredientHandler = (type) => {
-        /* Increase Count till 3 ingredients */
-        const oldCount = this.state.ingredients[type];
+						return accumulator + total;
+					}, totalPriceFromDatabase);
 
-        if (oldCount <= 2) {
-            const updatedCount = oldCount + 1;
-            const updatedIngredients = {
-                /* spread operator AND bracket notation so that it can be DYNAMIC value! */
-                ...this.state.ingredients,
-                [type]: updatedCount
-            };
+					this.setState(
+						{
+							totalPrice: updatedPrice,
+						},
+						() => {
+							// console.log(updatedPrice);
+						}
+					);
+				}
+			})
+			.catch((error) => {
+				this.setState({
+					error: true,
+				});
+			});
+	}
 
-            /* Increase Price */
-            const addToTotalPrice = INGREDIENT_PRICES[type]
-            const oldPrice = this.state.totalPrice;
+	/* methods to increase ingredients here... pass it to the build control. */
+	/* Follow LOGIC of how the argument is PASSED through different components. */
+	AddIngredientHandler = (type) => {
+		/* Increase Count till 3 ingredients */
+		const oldCount = this.state.ingredients[type];
 
-            /* I am keeping the price state, here is where calculation is applied. */
-            const updatedPrice = oldPrice + addToTotalPrice;
+		if (oldCount <= 2) {
+			const updatedCount = oldCount + 1;
+			const updatedIngredients = {
+				/* spread operator AND bracket notation so that it can be DYNAMIC value! */
+				...this.state.ingredients,
+				[type]: updatedCount,
+			};
 
-            this.setState({
-                ingredients: updatedIngredients,
-                totalPrice: updatedPrice
-            }); // , () => {console.log(this.state)}
-        
-            /* I didn't know where to call. I knew it did not work because I never called it until now. */
-            /* Didn't work because the ingredients weren't updated and that I was working with dated information. */
-            this.updateCheckoutButton(updatedIngredients);
-        }
-    }
+			/* Increase Price */
+			const addToTotalPrice = INGREDIENT_PRICES[type];
+			const oldPrice = this.state.totalPrice;
 
-    DeleteIngredientHandler = (type) => {
-        const oldCount = this.state.ingredients[type];
+			/* I am keeping the price state, here is where calculation is applied. */
+			const updatedPrice = oldPrice + addToTotalPrice;
 
-        if (oldCount > 0) {
-            const updatedCount = oldCount - 1;
-            const updatedIngredients = {
-                ...this.state.ingredients,
-                [type]: updatedCount
-            };
+			this.setState({
+				ingredients: updatedIngredients,
+				totalPrice: updatedPrice,
+			}); // , () => {console.log(this.state)}
 
-            /* Increase Price */
-            const SubtractToTotalPrice = INGREDIENT_PRICES[type]
-            const oldPrice = this.state.totalPrice;
+			/* I didn't know where to call. I knew it did not work because I never called it until now. */
+			/* Didn't work because the ingredients weren't updated and that I was working with dated information. */
+			this.updateCheckoutButton(updatedIngredients);
+		}
+	};
 
-            /* I am keeping the price state, here is where calculation is applied. */
-            const updatedPrice = oldPrice - SubtractToTotalPrice;
+	DeleteIngredientHandler = (type) => {
+		const oldCount = this.state.ingredients[type];
 
-            this.setState({
-                ingredients: updatedIngredients,
-                totalPrice: updatedPrice
-            }, () => {console.log(this.state)});
-            
-            this.updateCheckoutButton(updatedIngredients);
-        }
-    }
+		if (oldCount > 0) {
+			const updatedCount = oldCount - 1;
+			const updatedIngredients = {
+				...this.state.ingredients,
+				[type]: updatedCount,
+			};
 
-    updateCheckoutButton = (updatedIngredients) => {
+			/* Increase Price */
+			const SubtractToTotalPrice = INGREDIENT_PRICES[type];
+			const oldPrice = this.state.totalPrice;
 
-        // Just use the updatedIngredients that is passed
-        /* const ingredients = {
+			/* I am keeping the price state, here is where calculation is applied. */
+			const updatedPrice = oldPrice - SubtractToTotalPrice;
+
+			this.setState(
+				{
+					ingredients: updatedIngredients,
+					totalPrice: updatedPrice,
+				},
+				() => {
+					console.log(this.state);
+				}
+			);
+
+			this.updateCheckoutButton(updatedIngredients);
+		}
+	};
+
+	updateCheckoutButton = (updatedIngredients) => {
+		// Just use the updatedIngredients that is passed
+		/* const ingredients = {
             // the reason we need to work with dynamic setState is because we might get an OUTDATED state.
             ...updatedIngredients
         } */
-        const sum = Object.keys( updatedIngredients )
+		const sum = Object.keys(updatedIngredients)
 
-            /* this returns an array of values */
-            .map(key => {
-                return updatedIngredients[key]
-            })
+			/* this returns an array of values */
+			.map((key) => {
+				return updatedIngredients[key];
+			})
 
-            /* NOW use reduce,  */
-            .reduce((acc, curr) => {
-                return acc + curr
-            }, 0);
+			/* NOW use reduce,  */
+			.reduce((acc, curr) => {
+				return acc + curr;
+			}, 0);
 
-        this.setState({
-            checkoutButton: sum > 0
-        })
-    }
+		this.setState({
+			checkoutButton: sum > 0,
+		});
+	};
 
-    purchaseHandler = () => {
-        this.setState({purchaseNow: true});
-    }
+	purchaseHandler = () => {
+		this.setState({ purchaseNow: true });
+	};
 
-    declineHandler = () => {
-        this.setState({purchaseNow: false});
-    }
+	declineHandler = () => {
+		this.setState({ purchaseNow: false });
+	};
 
-    continueHandler = () => {
-        // alert('You continued!')
+	continueHandler = () => {
+        /* just add the route string!  */
+        // this.props.history.push('/checkout'); 
 
-        // loading CSS will appear
-        this.setState( { loading: true } );
-
-        const order = {
-            ingredients: this.state.ingredients,
-            totatlPrice: this.state.totalPrice,
-            customer: {
-                name: 'Flex',
-                address: {
-                    street: '100 State Street',
-                    zipCode: '02130',
-                    country: 'USA'
-                },
-                email: 'flex@flex.com'
-            },
-            deliveryMethod: 'car' 
+        const queryParams = [];
+        for ( let i in this.state.ingredients) {
+            /* encodeURIComponent just makes it a valid URL identification */
+                            // grabs the name                                   // grabs the value OF the name
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+            // ex. ["bacon=2", "cheese=1", "meat=0", "salad=2"]
         }
 
-        /* You can comment this out so that the CSS spinner shows! */
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({ purchaseNow: false, loading: false })
-            })
-            .catch(error => {
-                this.setState({ purchaseNow: false, loading: false })
-            })
+        const queryString = queryParams.join('&');
+        
+        /* altering code above with PARAMS now */
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        }); 
 
-    }
+        // alert('You continued!')
+        
+		/* loading CSS will appear */
+		// this.setState( { loading: true } );
+		// const order = {
+		//     ingredients: this.state.ingredients,
+		//     totatlPrice: this.state.totalPrice,
+		//     customer: {
+		//         name: 'Flex',
+		//         address: {
+		//             street: '100 State Street',
+		//             zipCode: '02130',
+		//             country: 'USA'
+		//         },
+		//         email: 'flex@flex.com'
+		//     },
+		//     deliveryMethod: 'car'
+        // }
+        
+		/* You can comment this out so that the CSS spinner shows! */
+		// axios.post('/orders.json', order)
+		//     .then(response => {
+		//         this.setState({ purchaseNow: false, loading: false })
+		//     })
+		//     .catch(error => {
+		//         this.setState({ purchaseNow: false, loading: false })
+        //     })
+	};
 
-    render() {
-        const { ingredients, totalPrice, checkoutButton, purchaseNow } = this.state;
+	render() {
+		const {
+			ingredients,
+			totalPrice,
+			checkoutButton,
+			purchaseNow,
+		} = this.state;
 
-        /* Copies ingredients object in an immutable way */
-        /* 
+		/* Copies ingredients object in an immutable way */
+		/* 
         It will always start at HERE, THEN changes the button!
         */
-        const disableLess = {
-            ...this.state.ingredients
-        }
+		const disableLess = {
+			...this.state.ingredients,
+		};
 
-        /* converting the values of cheese, meat... to boolean values! */
-        for (let key in disableLess) {
-             /* TRUE to disable button, FALSE to enable button */
-             /* everything before 0, like -1 etc. will set the values to TRUE, disabling button */
-            disableLess[key] = disableLess[key] <= 0
-        }
+		/* converting the values of cheese, meat... to boolean values! */
+		for (let key in disableLess) {
+			/* TRUE to disable button, FALSE to enable button */
+			/* everything before 0, like -1 etc. will set the values to TRUE, disabling button */
+			disableLess[key] = disableLess[key] <= 0;
+		}
 
-        /* 
+		/* 
         {
             cheese: true,
             salad: false
@@ -235,69 +273,72 @@ class BurgerBuilder extends Component {
         } 
         */
 
-       const disableMore = {
-        ...this.state.ingredients
-        }
-        for (let key in disableMore) {
-            /* TRUE to disable button, FALSE to enable button */
-            /* everything greater than 2 will disable button */
-            disableMore[key] = disableMore[key] > 2
-        }
+		const disableMore = {
+			...this.state.ingredients,
+		};
+		for (let key in disableMore) {
+			/* TRUE to disable button, FALSE to enable button */
+			/* everything greater than 2 will disable button */
+			disableMore[key] = disableMore[key] > 2;
+		}
 
-        let orderSummary = null 
+		let orderSummary = null;
 
-        // since ingredients
-        let burger = this.state.error ? <p>Ingredients can not be loaded!</p> : <Spinner />
-        
-        if ( this.state.ingredients ){
-            burger = 
-            <Aux>
-                <Burger ingredients={ingredients} />
-                <BuildControls 
-                    more={this.AddIngredientHandler}
-                    less={this.DeleteIngredientHandler}
-                    disableLess={disableLess}
-                    disableMore={disableMore}
-                    price={totalPrice}
-                    purchase={checkoutButton}
-                    order={this.purchaseHandler}
-                />
-            </Aux>
+		// since ingredients
+		let burger = this.state.error ? (
+			<p>Ingredients can not be loaded!</p>
+		) : (
+			<Spinner />
+		);
 
-            orderSummary = 
-                <OrderSummary 
-                    price={this.state.totalPrice}
-                    decline={this.declineHandler}
-                    ingredients={this.state.ingredients}
-                    checkout={this.continueHandler}
-                />
-        }
+		if (this.state.ingredients) {
+			burger = (
+				<Aux>
+					<Burger ingredients={ingredients} />
+					<BuildControls
+						more={this.AddIngredientHandler}
+						less={this.DeleteIngredientHandler}
+						disableLess={disableLess}
+						disableMore={disableMore}
+						price={totalPrice}
+						purchase={checkoutButton}
+						order={this.purchaseHandler}
+					/>
+				</Aux>
+			);
 
-        if ( this.state.loading ) {
-            orderSummary = <Spinner />
-        }
+			orderSummary = (
+				<OrderSummary
+					price={this.state.totalPrice}
+					decline={this.declineHandler}
+					ingredients={this.state.ingredients}
+					checkout={this.continueHandler}
+				/>
+			);
+		}
 
-        return(
-            <Aux>
-                {/* 
+		if (this.state.loading) {
+			orderSummary = <Spinner />;
+		}
+
+		return (
+			<Aux>
+				{/* 
                 Modal CAN be here if styled with CSS. Without it, it will block content such
                 as the Burger and BuildControls!
                  */}
-                <Modal
-                    decline={this.declineHandler}
-                    show={purchaseNow}
-                >
-                    {orderSummary}
-                </Modal>
-                {burger}
-            </Aux>
-        );
-    }
+				<Modal decline={this.declineHandler} show={purchaseNow}>
+					{orderSummary}
+				</Modal>
+				{burger}
+			</Aux>
+		);
+	}
 }
 
 BurgerBuilder.propTypes = {
-    type: PropTypes.string
-}
+	type: PropTypes.string,
+};
 
 /* BurgerBuilder is passed into withErrorHandler, which just adds a modal that explains an error if occurs,
 axios is passed because it will be used to intercept request/response and see if any error, if error occurs, show in Modal */

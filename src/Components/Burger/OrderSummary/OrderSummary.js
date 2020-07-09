@@ -13,7 +13,7 @@ class OrderSummary extends Component {
 
     /* Lifecycle Method -- checks to see if component is updated */
     componentDidUpdate() {
-        console.log('[OrderSummary] updated.')
+        // console.log('[OrderSummary] updated.')
     }
 
     render() {
