@@ -205,6 +205,8 @@ class BurgerBuilder extends Component {
             // ex. ["bacon=2", "cheese=1", "meat=0", "salad=2"]
         }
 
+        queryParams.push('price=' + this.state.totalPrice);
+
         const queryString = queryParams.join('&');
         
         /* altering code above with PARAMS now */
@@ -215,7 +217,10 @@ class BurgerBuilder extends Component {
 
         // alert('You continued!')
         
-		/* loading CSS will appear */
+        /* loading CSS will appear */
+        
+        // MOVED to ContactData
+
 		// this.setState( { loading: true } );
 		// const order = {
 		//     ingredients: this.state.ingredients,

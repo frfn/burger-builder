@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ContactData from './ContactData/ContactData'
+import ContactData from "./ContactData/ContactData";
 import CheckoutSummary from "../../Components/Order/CheckoutSummary/CheckoutSummary";
 import { Route } from "react-router-dom";
 
@@ -8,12 +8,8 @@ class Checkout extends Component {
 		super(props);
 
 		this.state = {
-			ingredients: {
-				// salad: 1,
-				// meat: 1,
-				// cheese: 1,
-				// bacon: 1,
-			},
+			ingredients: {},
+			price: 0,
 		};
 	}
 
@@ -21,13 +17,18 @@ class Checkout extends Component {
 		/* new URLSearchParams -- an iterable, so must be an array (for in [object] VS for of [array] */
 		const query = new URLSearchParams(this.props.location.search);
 		const ingredients = {};
+		let price = 0;
 
 		for (let param of query.entries()) {
 			// ex. ["bacon", "1"] | added '+' to cast to Number
-			ingredients[param[0]] = +param[1];
+			if (param[0] === "price") {
+				price = param[1];
+			} else {
+				ingredients[param[0]] = +param[1];
+			}
 		}
 
-		this.setState({ ingredients: ingredients });
+		this.setState({ ingredients: ingredients, totalPrice: price });
 	}
 
 	checkoutCancelledHandler = () => {
@@ -50,7 +51,16 @@ class Checkout extends Component {
 				{/* .path or .url works the same */}
 				<Route
 					path={this.props.match.path + "/contact-data"}
-					component={ContactData}
+                    // component={ContactData}
+                    
+                    /* very important that we USE render if we want to pass in properties */
+					render={(props) => (
+						<ContactData
+							ingredients={this.state.ingredients}
+                            totalPrice={this.state.totalPrice}
+                            {...props}
+						/>
+					)}
 				/>
 			</div>
 		);

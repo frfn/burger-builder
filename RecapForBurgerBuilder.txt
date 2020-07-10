@@ -434,4 +434,17 @@ Routing + Checkout Page
     - Added CSS for the FORM, looks like it is INSIDE a box now
 
 8. ORDER SUBMISSION (tricky?)
+    - in Checkout.js --> comment out component={ContactData}, use RENDER instead to open up a JSX code to grab the ingredients and pass it on to ContactData component 
+    - 'invalid array length' -- refresh page is culprit -- this is because the ingredients was not passed in correctly! Page refreshes THEN the state is wiped
+    - fix: use e.preventDefault(); so that the page does NOT reload
+    - orderHandler() is created in ContactData.js!
+        - POST request!!
+        - This sends the stuff to the database
+        - Dummy Data
+    - Spinner is being set up so that when button is pressed, there is an action taking place!
+        - Litty, it's nice to implement!
+    - To redirect to the ROOT page -- we do the spread operator in Checkout.js
+        - withRouter() HOC wrapper to ContactData
+        - spread operator when passing in the properties of ContactData in Checkout.js!
+            - does NOT need a variable just {...props}
     - 
