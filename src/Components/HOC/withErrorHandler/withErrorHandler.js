@@ -11,8 +11,12 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 error: null
             }
 
+            // Global Listeners -- interceptors
             // use must wrtie like this though you don't need to use req variable
+
+            /* interceptors, you MUST return the responses */
             this.reqInterceptor = axios.interceptors.request.use(req => {
+                /* this CLEARS the error at hand */
                 this.setState({
                     error: null
                 })
@@ -20,7 +24,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             })
 
             // error is coming from Firebase
-            // res => res is just return the response
+            // res => res is just returning the response, this is a MUST
             // - it is the shortest way to return something
             this.resInterceptor = axios.interceptors.response.use(res => res, error => {
                 this.setState({

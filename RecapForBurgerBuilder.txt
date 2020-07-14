@@ -447,4 +447,18 @@ Routing + Checkout Page
         - withRouter() HOC wrapper to ContactData
         - spread operator when passing in the properties of ContactData in Checkout.js!
             - does NOT need a variable just {...props}
+
+9. Creating Orders page
+    - Created Orders folder in Container
+    - Created Order.js in Components/Order/Order.js
+    - Module CSS transforms the classnames to UNIQUE names, meaning that 'active' will not work
+        - fix: activeClassName={styles.active}
+    - Both Buttons gets highlighted -- it treats the '/' as the prefix, so ALL buttons become 'active'
+        - fix: NavLink can also use 'exact' so that it treats the path as EXACT (cannot be used with Link, must be NavLink)
+
+10. Fetching Order
+    - Axios to fetch!
+    - The res.data is AN OBJECT full of objects, we need AN ARRAY.
+    - creating an array of order objects
+    - Modal IS NOT showing.. something is not working.
     - 

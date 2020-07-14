@@ -24,6 +24,7 @@ class Checkout extends Component {
 			if (param[0] === "price") {
 				price = param[1];
 			} else {
+				/* name = value */
 				ingredients[param[0]] = +param[1];
 			}
 		}
@@ -48,7 +49,7 @@ class Checkout extends Component {
 					checkoutContinued={this.checkoutContinuedHandler}
 					ingredients={this.state.ingredients}
 				/>
-				{/* .path or .url works the same */}
+				{/* .path or .url works the same, nest ROUTE */}
 				<Route
 					path={this.props.match.path + "/contact-data"}
                     // component={ContactData}
