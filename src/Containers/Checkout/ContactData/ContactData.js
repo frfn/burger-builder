@@ -4,54 +4,213 @@ import Button from "../../../Components/UI/Button/Button";
 import classes from "./ContactData.module.css";
 import axios from "../../../axios-order";
 import Spinner from "../../../Components/UI/Spinner/Spinner";
+import Input from "../../../Components/UI/Input/Input";
 
 class ContactData extends Component {
 	state = {
-		name: "",
-		email: "",
-		address: {
-			street: "",
-			postalCode: "",
+		// name: "",
+		// email: "",
+		// address: {
+		// 	street: "",
+		// 	postalCode: "",
+		// },
+
+		/* form fields + JS Config */
+		// OBJ vs ARR: well you can make this an array, makes more sense tho that 'orderForm' is an object
+		orderForm: {
+			name: {
+				elementType: "input",
+				elementConfig: { type: "text", placeholder: "Enter Name" },
+				value: "",
+				validation: {
+					required: true,
+				},
+				valid: false,
+				touch: false,
+				errorMessage: "Please enter a valid name...",
+			},
+			email: {
+				elementType: "input",
+				elementConfig: { type: "email", placeholder: "Enter Email" },
+				value: "",
+				validation: {
+					required: true,
+				},
+				valid: false,
+				touch: false,
+				errorMessage: "Please enter a valid Email Address...",
+			},
+			street: {
+				elementType: "input",
+				elementConfig: { type: "text", placeholder: "Enter Street" },
+				value: "",
+				validation: {
+					required: true,
+				},
+				valid: false,
+				touch: false,
+				errorMessage: "Please enter a valid Street...",
+			},
+			country: {
+				elementType: "input",
+				elementConfig: { type: "text", placeholder: "Enter Country" },
+				value: "",
+				validation: {
+					required: true,
+				},
+				valid: false,
+				touch: false,
+				errorMessage: "Please enter a valid Country...",
+			},
+			postalCode: {
+				elementType: "input",
+				elementConfig: {
+					type: "number",
+					placeholder: "Enter ZIP Code",
+				},
+				value: "",
+				validation: {
+					required: true,
+					minLength: 5,
+					maxLength: 5,
+				},
+				valid: false,
+				touch: false,
+				errorMessage: "Please enter a valid ZIP Code...",
+			},
+			deliveryMethod: {
+				elementType: "select",
+				elementConfig: {
+					option: [
+						{ value: "fastest", displayValue: "Fastest" },
+						{ value: "cheapest", displayValue: "Cheapest" },
+					],
+				},
+				// validation: {
+				// 	required: true,
+				// },
+				// valid: false,
+				// touch: false,
+			},
 		},
 		loading: false,
 	};
 
-	nameAndEmailChangeHandler = (e) => {
-		const { name, value } = e.target;
-		const currentState = this.state;
-		this.setState({
-			...currentState,
-			[name]: value,
-		});
+	// nameAndEmailChangeHandler = (e) => {
+	// 	const { name, value } = e.target;
+	// 	const currentState = this.state;
+	// 	this.setState({
+	// 		...currentState,
+	// 		[name]: value,
+	// 	});
+	// };
+
+	// addressChangeHandler = (e) => {
+	// 	const { name, value } = e.target;
+	// 	const currentState = this.state.address;
+	// 	this.setState({
+	// 		address: {
+	// 			...currentState,
+	// 			[name]: value,
+	// 		},
+	// 	});
+	// };
+
+	checkValidity = (value, rules) => {
+		// TRUTH TABLE:
+		// T T = T
+		// T F = F
+		/* by changing isValid to true and adding && isValid, it is going to do what we want */
+		let isValid = true; // instead of false
+
+		if (rules.required) {
+			/* .trim() removes white spaces*/
+			isValid = value.trim() !== "" && isValid;
+		}
+
+		/* want more rules? here's an ex! You can be creative here! */
+		if (rules.minLength) {
+			isValid = value.length >= rules.minLength && isValid;
+		}
+
+		if (rules.maxLength) {
+			isValid = value.length <= rules.minLength && isValid;
+		}
+
+		/* true or false */
+		return isValid;
 	};
 
-	addressChangeHandler = (e) => {
-		const { name, value } = e.target;
-		const currentState = this.state.address;
+	onChangeHandler = (event, inputIdentifier) => {
+		/* There are 'two' similar copies but the first only copies the props of orderForm, the second copies the values OF THE props of order form! */
+
+		const updatedOrderForm = {
+			/* not a deep clone for the values of orderForm, they are POINTERS, you would still mutate the values though! */
+			...this.state.orderForm,
+		};
+
+		const updatedFormElement = {
+			...updatedOrderForm[inputIdentifier],
+		};
+
+		// const { name, value } = event.target;
+
+		// this is WHY it is 'universal' for all input fields, event.target uses the .value property
+		updatedFormElement.value = event.target.value;
+
+		// for validity, checkValidity returns a boolean value
+		if (inputIdentifier !== "deliveryMethod") {
+			updatedFormElement.valid = this.checkValidity(
+				updatedFormElement.value,
+				updatedFormElement.validation
+			);
+		}
+
+		updatedFormElement.touch = true;
+
+		updatedOrderForm[inputIdentifier] = updatedFormElement;
 		this.setState({
-			address: {
-				...currentState,
-				[name]: value,
-			},
+			orderForm: updatedOrderForm,
 		});
 	};
 
 	orderHandler = (e) => {
-		e.preventDefault();
-        this.setState({ loading: true });
-        /* Dummy Data */
+		e.preventDefault(); // stops reloading
+		this.setState({ loading: true });
+		/* Dummy Data */
+		// const order = {
+		// 	ingredients: this.props.ingredients,
+		// 	totalPrice: this.props.totalPrice,
+		// 	customer: {
+		// 		name: "",
+		// 		email: "",
+		// 		address: {
+		// 			street: "",
+		// 			postalCode: "",
+		// 		},
+		// 	},
+		// 	deliveryMethod: "express",
+		// };
+		const formData = {};
+
+		for (let formElementIdentifier in this.state.orderForm) {
+			formData[formElementIdentifier] = this.state.orderForm[
+				formElementIdentifier
+			].value;
+		}
+
 		const order = {
 			ingredients: this.props.ingredients,
 			totalPrice: this.props.totalPrice,
-			customer: {
-				name: "",
-				email: "",
-				address: {
-					street: "",
-					postalCode: "",
-				},
-			},
-			deliveryMethod: "express",
+
+			/* 
+				ex. formData = { 
+						{name: 'flex'}, 
+						{email: '@gmail'},
+						... etc. 
+					} 
+			*/
+			orderData: formData,
 		};
 
 		axios
@@ -64,45 +223,82 @@ class ContactData extends Component {
 				this.setState({ loading: false });
 			});
 
-        /* this is only possible BECAUSE the props are being passed from the previos component, Checkout.js */
+		/* this is only possible BECAUSE the props are being passed from the previos component, Checkout.js */
 		this.props.history.push("/");
 	};
 
 	render() {
-		let form = (
-			<form className={classes.Form}>
-				<input
-					className={classes.Input}
+		/* 
+			This was used previously, now I am going to map() to dynamically render JSX
+				<Input
+					inputtype='input'
 					type='text'
 					name='name'
 					placeholder='Name'
 				/>
-				<input
-					className={classes.Input}
+				<Input
+					inputtype='input'
 					type='text'
 					name='email'
 					placeholder='Email'
 				/>
-				<input
-					className={classes.Input}
+				<Input
+					inputtype='input'
 					type='text'
 					name='street'
 					placeholder='Street'
 				/>
-				<input
-					className={classes.Input}
+				<Input
+					inputtype='input'
 					type='text'
 					name='Postal'
 					placeholder='Zip Code'
-				/>
+				/> */
+	
+		/* Creating an array that includes an ID + Config for the use of .map() to render the Input components */
+		const formElementsArray = [];
+		for (let key in this.state.orderForm) {
+			formElementsArray.push({
+				id: key,
+				config: this.state.orderForm[key],
+			});
+		}
+
+		console.log(formElementsArray);
+
+		let form = (
+			/* note the onSubmit function, here instead of Button's onSubmit */
+			<form onSubmit={this.orderHandler} className={classes.Form}>
+				{formElementsArray.map((formElement) => {
+					return (
+						/* Passing in so much shit. */
+						<Input
+							changed={(event) =>
+								/* Why TWO? event is a gimme, formElement.id is for input identifer SO to access .value property */
+								this.onChangeHandler(event, formElement.id)
+							}
+							key={formElement.id} // needed for .map()
+							elementType={formElement.config.elementType}
+							elementConfig={formElement.config.elementConfig}
+							value={formElement.config.value}
+							invalid={!formElement.config.valid}  // why '!' -- it is so that the Input becomes user friendly, no red CSS
+							shouldValidate={formElement.config.validation} // if property has a valid property, run CSS check in Input.js
+							touch={formElement.config.touch} // one time thing, sees if user goes on field, used for CSS
+							errorMessage={formElement.config.errorMessage} // an error message that will display on bottom of field if incorrect
+						/>
+					);
+				})}
 
 				{/* When Pressing the Button, no indication that it has been pressed. Grab a spinner! */}
-				<Button click={this.orderHandler} buttonType='Success'>
+				<Button buttonType='Success'>
+					{" "}
+					{/* click={this.orderHandler}  */}
 					ORDER
 				</Button>
 			</form>
 		);
 
+		/* if loading is true, this becomes a spinner */
 		if (this.state.loading) {
 			form = <Spinner />;
 		}

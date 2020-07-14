@@ -461,4 +461,30 @@ Routing + Checkout Page
     - The res.data is AN OBJECT full of objects, we need AN ARRAY.
     - creating an array of order objects
     - Modal IS NOT showing.. something is not working.
-    - 
+    - orders.js + order.js created!
+
+11. Forms
+    - Create new Input component
+    - using spread operator in <input /> tag + you can add more elements like buttons, drops downs, etc.
+    - using <Input /> in ContactData.js + inputType error! change to inputtype
+    - Form information
+        - JS Config ... take look at ContactData.js --> orderForm ... we're setting it up dynmaically
+        - .map() the Input fields!
+        - Transfrom Order object to an array
+        - Error, no onChange handlers
+            - create method for onChange function
+            - <Input/> passes it to Input.js --> has the onChange function
+            - If value is '', placeholder will show
+            - it does change now!
+    - Form Data has been fixed and sends correct data now, in ContactData.js
+    - Validation
+        - checkValidity
+        - udpatedFormElement.valid = this.checkValidity()
+        - && isValid ... isValid = true
+        - Feedback: 
+            - css
+            - touch: adding this made the form react more, it senses what forms are touched
+            - errorMessage, I can put in ContactData.js too, but as of now, it's in Input.js
+        - this WHOLE time, I'm like... ok, i press Order... it still goes thru EVEN though the forms aren't completely filled...
+            - Fix (Handling Overall Form):
+                - 

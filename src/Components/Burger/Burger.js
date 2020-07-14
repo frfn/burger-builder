@@ -5,7 +5,7 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
 import { withRouter } from 'react-router-dom'
 
 const Burger = ( props ) => {
-    console.log(props);
+    // console.log(props);
     /* Current props are: 
                 salad: 1,
                 bacon: 1,
