@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Input.module.css";
 
 const input = (props) => {
-    /* used to output the Input component */
+    /* used to output the input element! */
     let inputElement = null;
     
     /* for error messages */
@@ -20,7 +20,7 @@ const input = (props) => {
 		validationError = <p className={classes.ValidationError}>Please enter a valid {props.errorMessage}</p>;
 	}
 
-	/* checking input fields for different types of input */
+	/* checking input fields for different types of input -- IMPORTANT this is HOW THE INPUT ELEMENTS ARE CHOSEN */
 	switch (props.elementType) {
 		case "input":
 			// inputElement = <input className={classes.InputElement} {...props} />;
