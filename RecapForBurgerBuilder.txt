@@ -487,4 +487,14 @@ Routing + Checkout Page
             - errorMessage, I can put in ContactData.js too, but as of now, it's in Input.js
         - this WHOLE time, I'm like... ok, i press Order... it still goes thru EVEN though the forms aren't completely filled...
             - Fix (Handling Overall Form):
-                - 
+                - Turn Off 'Order' button
+                - undefined is ALWAYS treated as false
+        - Fixing select error:
+            - The validation + valid prop has been added
+            - if (!rules) { return true };  in checkValidity()
+            - can be implemented in both areas without problem!
+            - BUG FOUND if value is EMPTY string in 'select' element
+                - when clicking Order, it will SEND empty string, value ONLY changes when user clicks on element and chooses option, this can cause a major error!
+                - you can just set {value: 'fastest'} , also fixes it quick!
+                - I didn't use it, so I'm good. But a great error to catch!
+    

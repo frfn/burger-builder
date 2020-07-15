@@ -86,6 +86,7 @@ class ContactData extends Component {
 						{ value: "cheapest", displayValue: "Cheapest" },
 					],
 				},
+				// value: ''
 				// validation: {
 				// 	required: true,
 				// },
@@ -94,6 +95,7 @@ class ContactData extends Component {
 			},
 		},
 		loading: false,
+		formIsValid: false,
 	};
 
 	// nameAndEmailChangeHandler = (e) => {
@@ -168,10 +170,44 @@ class ContactData extends Component {
 
 		updatedFormElement.touch = true;
 
+		/* this works because FALSE overrides TRUE in the truth table for && */
+		/* I created my own helper method */
+		// let formIsValid = true;
+		// for (let inputIdentifier in updatedOrderForm) {
+		// 	formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+		// }
+
 		updatedOrderForm[inputIdentifier] = updatedFormElement;
 		this.setState({
 			orderForm: updatedOrderForm,
+			// formIsValid: formIsValid,
 		});
+	};
+
+	validOrderCheck = () => {
+		let orderIsValid = true;
+
+		const updatedOrderForm = {
+			...this.state.orderForm,
+		};
+
+		for (let prop in updatedOrderForm) {
+			/* delivery methiod does NOT have .valid so it was giving me undefined... */
+			// if (prop === "deliveryMethod") {
+			// 	break;
+			// }
+
+			if (updatedOrderForm[prop].valid === false) {
+				orderIsValid = false;
+				break;
+			}
+			console.log(updatedOrderForm[prop].valid);
+
+			/* if it does not HAVE a .valid value, skip!, so method does work even if value does not include .valid in deliveryMethod prop */
+		}
+
+		/* boolean value */
+		return orderIsValid;
 	};
 
 	orderHandler = (e) => {
@@ -254,7 +290,7 @@ class ContactData extends Component {
 					name='Postal'
 					placeholder='Zip Code'
 				/> */
-	
+
 		/* Creating an array that includes an ID + Config for the use of .map() to render the Input components */
 		const formElementsArray = [];
 		for (let key in this.state.orderForm) {
@@ -266,6 +302,17 @@ class ContactData extends Component {
 
 		console.log(formElementsArray);
 
+		/* When Pressing the Button, no indication that it has been pressed. Grab a spinner! */
+		/* disabled={!this.state.formIsValid} inside Button prop */
+		let button = this.validOrderCheck() ? (
+			<Button buttonType='Success'>
+				{/* click={this.orderHandler}  */}
+				ORDER
+			</Button>
+		) : (
+			<h4>Please Fill Out Form to Order</h4>
+		);
+
 		let form = (
 			/* note the onSubmit function, here instead of Button's onSubmit */
 			<form onSubmit={this.orderHandler} className={classes.Form}>
@@ -273,6 +320,7 @@ class ContactData extends Component {
 					return (
 						/* Passing in so much shit. */
 						<Input
+							// label={formElement.id}
 							changed={(event) =>
 								/* Why TWO? event is a gimme, formElement.id is for input identifer SO to access .value property */
 								this.onChangeHandler(event, formElement.id)
@@ -281,20 +329,14 @@ class ContactData extends Component {
 							elementType={formElement.config.elementType}
 							elementConfig={formElement.config.elementConfig}
 							value={formElement.config.value}
-							invalid={!formElement.config.valid}  // why '!' -- it is so that the Input becomes user friendly, no red CSS
+							invalid={!formElement.config.valid} // why '!' -- it is so that the Input becomes user friendly, no red CSS
 							shouldValidate={formElement.config.validation} // if property has a valid property, run CSS check in Input.js
 							touch={formElement.config.touch} // one time thing, sees if user goes on field, used for CSS
 							errorMessage={formElement.config.errorMessage} // an error message that will display on bottom of field if incorrect
 						/>
 					);
 				})}
-
-				{/* When Pressing the Button, no indication that it has been pressed. Grab a spinner! */}
-				<Button buttonType='Success'>
-					{" "}
-					{/* click={this.orderHandler}  */}
-					ORDER
-				</Button>
+				{button}
 			</form>
 		);
 

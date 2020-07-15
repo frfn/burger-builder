@@ -44,7 +44,7 @@ const input = (props) => {
 			);
 			break;
 
-		/* mapping out options, different from above */
+		/* mapping out options, different from above, select element is different as it has more properties to manipulate */
 		case "select":
 			inputElement = (
 				<select
