@@ -168,7 +168,7 @@ class ContactData extends Component {
 			);
 		}
 
-		updatedFormElement.touch = true;
+		updatedFormElement.touch = true; // maybe if event.target.value > 0
 
 		/* this works because FALSE overrides TRUE in the truth table for && */
 		/* I created my own helper method */

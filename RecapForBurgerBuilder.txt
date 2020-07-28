@@ -497,4 +497,13 @@ Routing + Checkout Page
                 - when clicking Order, it will SEND empty string, value ONLY changes when user clicks on element and chooses option, this can cause a major error!
                 - you can just set {value: 'fastest'} , also fixes it quick!
                 - I didn't use it, so I'm good. But a great error to catch!
+    - Validation packages are available for third party! 
+        - NPMjs has their own Validation 
+        - Formsy
+        - React
+        - validationjs.org
+
+12. Redux
+    
+
     

@@ -31,6 +31,7 @@ const order = (props) => {
 
 	return (
 		<div className={classes.Order}>
+			<p>For {props.name}</p>
 			<p>Ingredients: {ingredientOutput}</p>
 			<p>
 				Price <strong>${Number(props.totalPrice).toFixed(2)}</strong>

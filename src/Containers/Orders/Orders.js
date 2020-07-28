@@ -55,7 +55,7 @@ class Orders extends Component {
 							key={order.id}
 							totalPrice={+order.totalPrice}
 							ingredients={order.ingredients}
-
+							name={order.orderData.name}
 						/>
 					);
 				})}
