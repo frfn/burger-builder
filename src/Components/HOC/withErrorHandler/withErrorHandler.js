@@ -30,7 +30,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 this.setState({
                     error: error
                 })
+                // return error;
             })
+            
         }
 
         componentWillUnmount () {

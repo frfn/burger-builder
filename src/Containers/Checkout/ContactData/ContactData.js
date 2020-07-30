@@ -86,6 +86,7 @@ class ContactData extends Component {
 						{ value: "cheapest", displayValue: "Cheapest" },
 					],
 				},
+				/* For the troubleshoot, leave the delivery method to have NO value. */
 				// value: ''
 				// validation: {
 				// 	required: true,
@@ -235,6 +236,7 @@ class ContactData extends Component {
 			].value;
 		}
 
+		// stuff will be changed.
 		const order = {
 			ingredients: this.props.ingredients,
 			totalPrice: this.props.totalPrice,

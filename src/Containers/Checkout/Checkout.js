@@ -54,7 +54,7 @@ class Checkout extends Component {
 					path={this.props.match.path + "/contact-data"}
                     // component={ContactData}
                     
-                    /* very important that we USE render if we want to pass in properties */
+                    /* very important that we USE render if we want to pass properties WHILE using routing */
 					render={(props) => (
 						<ContactData
 							ingredients={this.state.ingredients}

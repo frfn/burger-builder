@@ -186,11 +186,11 @@ class BurgerBuilder extends Component {
 	};
 
 	purchaseHandler = () => {
-		this.setState({ purchaseNow: true });
+		this.setState({ purchaseNow: true }, () => {console.log(this.state.purchaseNow)});
 	};
 
 	declineHandler = () => {
-		this.setState({ purchaseNow: false });
+		this.setState({ purchaseNow: false }, () => {console.log(this.state.purchaseNow)});
 	};
 
 	continueHandler = () => {
