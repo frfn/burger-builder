@@ -504,6 +504,43 @@ Routing + Checkout Page
         - validationjs.org
 
 12. Redux
-    
+
+Install react-redux & redux
+
+Create Store folder + Reducer
+
+Create Store in index.js
+
+Create Reducer ALL the way to get no errors. No export default, no return state, all bad.
+
+React Redux & React Router?! hmmmhmmm. 
+
+Start SLOW. Two cases in ingredientsReducer
+
+I dont have the same reducer as he does
+
+    return {
+        ...state,
+        ingredients: {
+            ...state.ingredients,
+            [action.ingredientName]: state.ingredient[action.ingredientName] + 1
+        }
+    }
+
+Reducer for ingredients DONE. EasY PZ.
+
+Take a look at burger builder ... the methods have been commented out and moved to the reducer
+
+How to take care of the ORDER NOW button?
+Since it is controlled by state, take it out BECAUSE it takes in INGREDIENTS
+
+EVERYTHING IS CONNECTED TO THE REDUX PROPERTIES... even the LESS .. MORE buttons, variables are ... disableLess and disableMore
+
+
+
+
+
+
+
 
     

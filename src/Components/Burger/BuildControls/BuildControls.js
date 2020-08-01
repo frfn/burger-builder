@@ -27,7 +27,7 @@ const BuildControls = ({ less, more, disableMore, disableLess, price, purchase, 
                         label={label}
                         /* type={type} no need here, just pass into the less or more method, () => func() , so when it's clicked, it's fired! */
 
-                        /* methods passed */
+                        /* methods passed - also for redux! */
                         less={() => less(type)}
                         more={() => more(type)}
 
