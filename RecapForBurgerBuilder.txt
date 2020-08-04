@@ -532,15 +532,13 @@ Reducer for ingredients DONE. EasY PZ.
 Take a look at burger builder ... the methods have been commented out and moved to the reducer
 
 How to take care of the ORDER NOW button?
-Since it is controlled by state, take it out BECAUSE it takes in INGREDIENTS
+Since checkoutButton is controlled by state, take it out BECAUSE it takes in INGREDIENTS. YOu can of course PUT IT IN REDUCER.
 
 EVERYTHING IS CONNECTED TO THE REDUX PROPERTIES... even the LESS .. MORE buttons, variables are ... disableLess and disableMore
 
+We just changed the ORDER NOW BUTTON... that was the LATEST thing you did.
 
+You can have everything that manages state IN Redux... but you can also have state in LOCAL UI and manage it in the component.
+So if you want a lean component/container, go for ALL-REDUX, if no, go for SEMI-REDUX.
 
-
-
-
-
-
-    
+Fixed the Checkout.js + Contact.js TO USE REDUX connect() to grab the ingredients and price from store.

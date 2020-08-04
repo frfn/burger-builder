@@ -184,44 +184,52 @@ class BurgerBuilder extends Component {
 		// });
 	};
 
+	// this makes the MODAL show
 	purchaseHandler = () => {
 		this.setState({ purchaseNow: true }, () => {
 			console.log(this.state.purchaseNow);
 		});
 	};
 
+	// makes the MODAL hide
 	declineHandler = () => {
 		this.setState({ purchaseNow: false }, () => {
 			console.log(this.state.purchaseNow);
 		});
 	};
 
+	// this is the CONTINUE button IN THE MODAL
 	continueHandler = () => {
+		// EDIT 3 --
+		this.props.history.push("/checkout");
+
 		/* just add the route string!  */
 		// this.props.history.push('/checkout');
 
-		const queryParams = [];
-		for (let i in this.state.ingredients) {
-			/* encodeURIComponent just makes it a valid URL identification */
-			// grabs the name                                   // grabs the value OF the name
-			queryParams.push(
-				encodeURIComponent(i) +
-					"=" +
-					encodeURIComponent(this.state.ingredients[i])
-			);
-			// ex. ["bacon=2", "cheese=1", "meat=0", "salad=2"]
-		}
+		// // EDIT 2 --
+		// const queryParams = [];
+		// for (let i in this.props.ingredients) {
+		// 	/* encodeURIComponent just makes it a valid URL identification */
+		// 	// grabs the name                                   // grabs the value OF the name
+		// 	queryParams.push(
+		// 		encodeURIComponent(i) +
+		// 			"=" +
+		// 			encodeURIComponent(this.props.ingredients[i])
+		// 	);
+		// 	// ex. ["bacon=2", "cheese=1", "meat=0", "salad=2"]
+		// }
 
-		queryParams.push("price=" + this.state.totalPrice);
+		// queryParams.push("price=" + this.props.totalPrice);
 
-		const queryString = queryParams.join("&");
+		// const queryString = queryParams.join("&");
 
-		/* altering code above with PARAMS now */
-		this.props.history.push({
-			pathname: "/checkout",
-			search: "?" + queryString,
-		});
+		// /* altering code above with PARAMS now */
+		// this.props.history.push({
+		// 	pathname: "/checkout",
+		// 	search: "?" + queryString,
+		// });
 
+		// EDIT 1 --
 		// alert('You continued!')
 
 		/* loading CSS will appear */
@@ -258,7 +266,7 @@ class BurgerBuilder extends Component {
 		const {
 			// ingredients,
 			// totalPrice,
-			checkoutButton,
+			// checkoutButton,
 			purchaseNow,
 		} = this.state;
 
@@ -318,7 +326,9 @@ class BurgerBuilder extends Component {
 						disableMore={disableMore}
 						price={this.props.totalPrice}
 						// purchase={checkoutButton}
-						purchase={this.updateCheckoutButton(this.props.ingredients)} // just returns a BOOLEAN value
+						purchase={this.updateCheckoutButton(
+							this.props.ingredients
+						)} // just returns a BOOLEAN value
 						order={this.purchaseHandler}
 					/>
 				</Aux>
