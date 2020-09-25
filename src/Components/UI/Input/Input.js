@@ -23,7 +23,7 @@ const input = (props) => {
 	/* checking input fields for different types of input -- IMPORTANT this is HOW THE INPUT ELEMENTS ARE CHOSEN */
 	switch (props.elementType) {
 		case "input":
-			// inputElement = <input className={classes.InputElement} {...props} />;
+			// inputElement = <input className={classes.InputElement} {...props} />; *** Take a look, this is how to decrease complexity, by using this component correctly, just pass in the attributes through the component! 
 			inputElement = (
 				<input
 					className={inputClasses.join(" ")}

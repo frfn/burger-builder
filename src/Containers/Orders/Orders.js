@@ -14,7 +14,7 @@ class Orders extends Component {
 		axios
 			.get("/orders.json")
 			.then((res) => {
-				// console.log(res.data)
+				console.log(res)
 
 				// for: in for objects, of for arrays
 				const fetchedOrders = [];
@@ -29,6 +29,7 @@ class Orders extends Component {
 						...res.data[order],
 						id: order,
 					});
+					// console.log(res.data[order])
 				}
 
 				this.setState(

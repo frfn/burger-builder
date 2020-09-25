@@ -9,8 +9,11 @@ const order = (props) => {
 		ingredients.push({
 			name: ingredientName,
 			amount: props.ingredients[ingredientName],
+			id: ingredientName + props.ingredients[ingredientName]
 		});
 	}
+	
+	console.log(ingredients)
 
 	const ingredientOutput = ingredients.map((ing) => {
 		return (
@@ -34,7 +37,7 @@ const order = (props) => {
 			<p>For {props.name}</p>
 			<p>Ingredients: {ingredientOutput}</p>
 			<p>
-				Price <strong>${Number(props.totalPrice).toFixed(2)}</strong>
+				Price: <strong>${Number(props.totalPrice).toFixed(2)}</strong>
 			</p>
 		</div>
 	);
