@@ -8,12 +8,16 @@ const input = (props) => {
     /* for error messages */
     let validationError = null;
     
-    /* for css classes, originally an array so we can push error CSS classes */
+	/* for css classes, originally an array so we can push error CSS classes */
+	/*
+	 We did this as an ARRAY so that we can push the invalid class inside it,
+	 else, it will just be ONE class in the className={inputClasses.join(" ")}
+	 */
 	const inputClasses = [classes.InputElement];
 
     /* THREE props?! It is for CSS use and friendly form coloring... you don't need all tbh :D */
 	if (props.invalid && props.shouldValidate && props.touch) {
-        // pushes class
+        // pushes class 
         inputClasses.push(classes.Invalid);
         
         // shows error if there is error

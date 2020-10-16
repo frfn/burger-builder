@@ -7,7 +7,8 @@ const initialState = {
 		meat: 0,
 		bacon: 0,
 	},
-	// price is here b/c it will be easier to manage
+
+	// LOOK HERE! Also part of state -- price is here b/c it will be easier to manage
 	totalPrice: 6,
 };
 
@@ -22,9 +23,11 @@ const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.ADD_INGREDIENT:
 			return {
-				...state,
+				...state, // we have to unpack state, no matter what, as well as because this is not setState, does not merge automatically, totalPrice!
 				ingredients: {
 					...state.ingredients,
+
+					// dynamic naming for object properties
 					[action.payload.ingredientName]:
 						state.ingredients[action.payload.ingredientName] + 1,
 				},

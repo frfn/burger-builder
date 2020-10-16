@@ -9,6 +9,7 @@ const Button = ( { children, click, buttonType } ) => {
 
     return (
         /* adding disabled prop */
+        // disabled = {props.disabled}
         <button className={buttonCSS.join(' ')} onClick={click}>{children}</button>
     );
 }

@@ -60,6 +60,13 @@ class Checkout extends Component {
 				/>
 				{/* .path or .url works the same, nest ROUTE */}
 				<Route
+					// we used like because it seems like you need to
+					// you have to <Route to='contact-data' /> in App.js to make it work WITHOUT the other URL words ex. (checkout/etc/etc/URL)
+					// here we are using the CURRENT url + /contact-data
+					// Why? by going to this current path, it renders ContactData component
+					// How? continueHandler replaces URL with exact URL of /contact-data route
+
+					// At this URL, show the component (ContactData) at the URL path
 					path={this.props.match.path + "/contact-data"}
 
 					// EDIT 2 -- back to it, commented out but now we're using this.
@@ -91,4 +98,5 @@ const mapStateToProps = (state) => {
 };
 
 // a function that returns an HOC function
+// connect(null, mapDispatchToProps) <-- if no stateToProps but want dispatchToProps
 export default connect(mapStateToProps)(Checkout);

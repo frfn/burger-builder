@@ -178,7 +178,8 @@ class BurgerBuilder extends Component {
 				return acc + curr;
 			}, 0);
 
-		return sum > 0;
+		return sum > 0; // total of ingredients! if 0, button is off, is greater than 0, purchase button "turns" on
+																	// "on" means disabled is set to FALSE in BuildControls.js for the button
 		// this.setState({
 		// 	checkoutButton: sum > 0,
 		// });
@@ -382,6 +383,7 @@ const mapDispatchToProps = (dispatch) => {
 				payload: { ingredientName: ingredientName },
 			}),
 
+		// removeIng(ingredientName) { return dispatch({ ... }) } <-- normal traditional function => just use arrow function hehe
 		onRemoveIngredient: (ingredientName) =>
 			dispatch({
 				type: actionTypes.REMOVE_INGREDIENT,

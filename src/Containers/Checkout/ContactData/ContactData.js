@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 
 class ContactData extends Component {
 	componentDidMount() {
-		console.log(this.props);
+		// console.log(this.props);
 	}
 
 	state = {
@@ -24,6 +24,8 @@ class ContactData extends Component {
 
 		/* form fields + JS Config */
 		// OBJ vs ARR: well you can make this an array, makes more sense tho that 'orderForm' is an object
+
+		// error message is SET in Input.js
 		orderForm: {
 			name: {
 				elementType: "input",
@@ -34,7 +36,7 @@ class ContactData extends Component {
 				},
 				valid: false,
 				touch: false,
-				errorMessage: "Please enter a valid name...",
+				errorMessage: "Name...",
 			},
 			email: {
 				elementType: "input",
@@ -45,7 +47,7 @@ class ContactData extends Component {
 				},
 				valid: false,
 				touch: false,
-				errorMessage: "Please enter a valid Email Address...",
+				errorMessage: "Email Address...",
 			},
 			street: {
 				elementType: "input",
@@ -56,7 +58,7 @@ class ContactData extends Component {
 				},
 				valid: false,
 				touch: false,
-				errorMessage: "Please enter a valid Street...",
+				errorMessage: "Street...",
 			},
 			country: {
 				elementType: "input",
@@ -67,7 +69,7 @@ class ContactData extends Component {
 				},
 				valid: false,
 				touch: false,
-				errorMessage: "Please enter a valid Country...",
+				errorMessage: "Country...",
 			},
 			postalCode: {
 				elementType: "input",
@@ -83,7 +85,7 @@ class ContactData extends Component {
 				},
 				valid: false,
 				touch: false,
-				errorMessage: "Please enter a valid ZIP Code...",
+				errorMessage: "ZIP Code...",
 			},
 			deliveryMethod: {
 				elementType: "select",
@@ -130,6 +132,11 @@ class ContactData extends Component {
 		// TRUTH TABLE:
 		// T T = T
 		// T F = F
+
+		// rules.minLength & rules.maxLength philosophy, it checks one by one, so if isValid is not true and checked, there is a flaw
+		// flaw: it will give WRONG false/true results because code checks the rules (the if statements) one by one 
+
+
 		/* by changing isValid to true and adding && isValid, it is going to do what we want */
 		let isValid = true; // instead of false
 
@@ -182,15 +189,18 @@ class ContactData extends Component {
 		/* I created my own helper method */
 		// let formIsValid = true;
 		// for (let inputIdentifier in updatedOrderForm) {
-		// 	formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+		// 	formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid <-- this will FIND the false value 
+		//  																		it is the same as valid OrderCheck, and MORE efficient!
 		// }
 
+		// the current order form (not changed yet--only change IMMUTABLY), and the obj inside (like country), will equal to the new updatedFormElement because it has BEEN changed
 		updatedOrderForm[inputIdentifier] = updatedFormElement;
 		this.setState({
 			orderForm: updatedOrderForm,
 			// formIsValid: formIsValid,
 		});
 	};
+
 
 	validOrderCheck = () => {
 		let orderIsValid = true;
@@ -207,12 +217,14 @@ class ContactData extends Component {
 
 			if (updatedOrderForm[prop].valid === false) {
 				orderIsValid = false;
-				break;
+				break; // if it finds a false value, break INSTANTLY!
 			}
-			console.log(updatedOrderForm[prop].valid);
+			// console.log(updatedOrderForm[prop].valid);
 
 			/* if it does not HAVE a .valid value, skip!, so method does work even if value does not include .valid in deliveryMethod prop */
 		}
+
+		console.log(orderIsValid)
 
 		/* boolean value */
 		return orderIsValid;
@@ -309,9 +321,8 @@ class ContactData extends Component {
 			});
 		}
 
-		console.log(formElementsArray);
+		// console.log(formElementsArray);
 
-		/* When Pressing the Button, no indication that it has been pressed. Grab a spinner! */
 		/* disabled={!this.state.formIsValid} inside Button prop */
 		let button = this.validOrderCheck() ? (
 			<Button buttonType='Success'>
@@ -349,6 +360,7 @@ class ContactData extends Component {
 			</form>
 		);
 
+		/* When Pressing the Button, no indication that it has been pressed. Grab a spinner! */
 		/* if loading is true, this becomes a spinner */
 		if (this.state.loading) {
 			form = <Spinner />;
@@ -366,7 +378,7 @@ class ContactData extends Component {
 const mapStateToProps = (state) => {
 	return {
 		ings: state.ingredients,
-		price: state.price,
+		price: state.totalPrice,
 	};
 };
 

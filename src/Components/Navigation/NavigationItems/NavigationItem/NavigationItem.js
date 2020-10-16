@@ -13,7 +13,7 @@ const navigationItem = ({ children, link, active }) => {
 	return (
 		<li className={styles.NavigationItem}>
 			<NavLink
-                exact
+                exact /* when true, the style will be applied if the location is correct */
 				to={link}
 				/* styles.active will be the random generated name for the class */
                 activeClassName={styles.active}
