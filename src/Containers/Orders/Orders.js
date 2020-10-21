@@ -14,7 +14,7 @@ class Orders extends Component {
 		axios
 			.get("/orders.json")
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 
 				// for: in for objects, of for arrays
 				const fetchedOrders = [];
@@ -38,7 +38,7 @@ class Orders extends Component {
 						loading: false,
 					},
 					() => {
-						console.log(fetchedOrders);
+						// console.log(fetchedOrders);
 					}
 				);
 			})

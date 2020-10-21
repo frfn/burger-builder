@@ -10,7 +10,10 @@ const withErrorHandler = (WrappedComponent, axios) => {
 			this.state = {
 				error: null,
 			};
-
+		}
+		
+		// By grabbing the code from the constructor and putting it into WILL MOUNT, it fixed the Modal Network Error. thank god.
+		componentWillMount () {
 			// Global Listeners -- interceptors
 			// use must wrtie like this though you don't need to use req variable
 

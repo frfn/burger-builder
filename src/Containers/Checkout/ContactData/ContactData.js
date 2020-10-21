@@ -134,8 +134,7 @@ class ContactData extends Component {
 		// T F = F
 
 		// rules.minLength & rules.maxLength philosophy, it checks one by one, so if isValid is not true and checked, there is a flaw
-		// flaw: it will give WRONG false/true results because code checks the rules (the if statements) one by one 
-
+		// flaw: it will give WRONG false/true results because code checks the rules (the if statements) one by one
 
 		/* by changing isValid to true and adding && isValid, it is going to do what we want */
 		let isValid = true; // instead of false
@@ -189,7 +188,7 @@ class ContactData extends Component {
 		/* I created my own helper method */
 		// let formIsValid = true;
 		// for (let inputIdentifier in updatedOrderForm) {
-		// 	formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid <-- this will FIND the false value 
+		// 	formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid <-- this will FIND the false value
 		//  																		it is the same as valid OrderCheck, and MORE efficient!
 		// }
 
@@ -200,7 +199,6 @@ class ContactData extends Component {
 			// formIsValid: formIsValid,
 		});
 	};
-
 
 	validOrderCheck = () => {
 		let orderIsValid = true;
@@ -224,7 +222,7 @@ class ContactData extends Component {
 			/* if it does not HAVE a .valid value, skip!, so method does work even if value does not include .valid in deliveryMethod prop */
 		}
 
-		console.log(orderIsValid)
+		// console.log(orderIsValid)
 
 		/* boolean value */
 		return orderIsValid;
@@ -274,14 +272,13 @@ class ContactData extends Component {
 			.post("/orders.json", order)
 			.then((response) => {
 				console.log(response);
-				this.setState({ loading: false });
+				this.setState({ loading: false }); // for the spinner, loading animation
+				/* this is only possible BECAUSE the props are being passed from the previos component, Checkout.js */
+				this.props.history.push("/");
 			})
 			.catch((error) => {
 				this.setState({ loading: false });
 			});
-
-		/* this is only possible BECAUSE the props are being passed from the previos component, Checkout.js */
-		this.props.history.push("/");
 	};
 
 	render() {
@@ -325,7 +322,7 @@ class ContactData extends Component {
 
 		/* disabled={!this.state.formIsValid} inside Button prop */
 		let button = this.validOrderCheck() ? (
-			<Button buttonType='Success'>
+			<Button buttonType="Success">
 				{/* click={this.orderHandler}  */}
 				ORDER
 			</Button>

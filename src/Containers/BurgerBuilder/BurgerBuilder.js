@@ -12,7 +12,8 @@ import withErrorHandler from "../../Components/HOC/withErrorHandler/withErrorHan
 
 // Redux
 import { connect } from "react-redux";
-import * as actionTypes from "../../Store/actions";
+// import * as actionTypes from "../../Store/actions/actionTypes";
+import * as actionCreator from "../../Store/actions/index";
 
 /* Make your own project with CONSTANTS. They're so useful. */
 // const INGREDIENT_PRICES = {
@@ -41,13 +42,31 @@ class BurgerBuilder extends Component {
 			/* for button! */
 			// checkoutButton: false,
 			purchaseNow: false,
-			loading: false,
-			error: false,
+			// loading: false,
+			// error: false,
 		};
 	}
 
 	// .json is SUPER IMPORTANT, IT MUST be there.
 	componentDidMount() {
+		// ** ADDING REDUX ASYNC FUNCTION ** //
+		// EDIT 2 -- action creator + redux thunk!
+		this.props.onInitIngredients();
+
+		// EDIT 1 -- You can do this, but do EDIT 2
+		// axios
+		// 	.get("ingredients.json")
+		// 	.then((res) => {
+		// 		// dispatch call!
+		// 	})
+		// 	.catch((error) => {
+		// 		this.setState({ error: true });
+		// 		console.log(error);
+		// 	});
+		// test, this works... .json is the endpoint object that we will reach
+		// axios.get("ingredients/bacon.json").then((res) => {
+		// 	console.log(res)
+		// })
 		// console.log(this.props) I wanted to test if the Router Properties are being passed
 		// axios
 		// 	.get(
@@ -179,7 +198,7 @@ class BurgerBuilder extends Component {
 			}, 0);
 
 		return sum > 0; // total of ingredients! if 0, button is off, is greater than 0, purchase button "turns" on
-																	// "on" means disabled is set to FALSE in BuildControls.js for the button
+		// "on" means disabled is set to FALSE in BuildControls.js for the button
 		// this.setState({
 		// 	checkoutButton: sum > 0,
 		// });
@@ -306,10 +325,11 @@ class BurgerBuilder extends Component {
 		let orderSummary = null;
 
 		// since ingredients
-		let burger = this.state.error ? (
+		let burger = this.props.error ? (
 			<p>Ingredients can not be loaded!</p>
 		) : (
 			<div>
+				No error, but loading! I'm async now bitch!
 				<Spinner />
 			</div>
 		);
@@ -345,9 +365,9 @@ class BurgerBuilder extends Component {
 			);
 		}
 
-		if (this.state.loading) {
-			orderSummary = <Spinner />;
-		}
+		// if (this.state.loading) {
+		// 	orderSummary = <Spinner />;
+		// }
 
 		return (
 			<Aux>
@@ -372,23 +392,30 @@ const mapStateToProps = (state) => {
 	return {
 		ingredients: state.ingredients,
 		totalPrice: state.totalPrice,
+		error: state.error,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onAddIngredient: (ingredientName) =>
-			dispatch({
-				type: actionTypes.ADD_INGREDIENT,
-				payload: { ingredientName: ingredientName },
-			}),
+			dispatch(
+				actionCreator.addIngredient({ ingredientName: ingredientName })
+			),
 
 		// removeIng(ingredientName) { return dispatch({ ... }) } <-- normal traditional function => just use arrow function hehe
 		onRemoveIngredient: (ingredientName) =>
-			dispatch({
-				type: actionTypes.REMOVE_INGREDIENT,
-				payload: { ingredientName: ingredientName },
-			}),
+			dispatch(
+				actionCreator.removeIngredient({
+					ingredientName: ingredientName,
+				})
+			),
+		// dispatch({
+		// 	type: actionTypes.REMOVE_INGREDIENT,
+		// 	payload: { ingredientName: ingredientName },
+		// }),
+
+		onInitIngredients: () => dispatch(actionCreator.initIngredient()),
 	};
 };
 

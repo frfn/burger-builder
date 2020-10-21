@@ -13,7 +13,7 @@ const order = (props) => {
 		});
 	}
 	
-	console.log(ingredients)
+	// console.log(ingredients)
 
 	const ingredientOutput = ingredients.map((ing) => {
 		return (

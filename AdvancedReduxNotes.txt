@@ -1,0 +1,24 @@
+1. Installing the Redux Dev Tools and using it with Google Chrome!
+        - index.js
+        - composeEnhancer and applyMiddle has been added
+
+2. Following the bread crumbs and seeing what argument is being passed for the ACTION CREATOR
+        - the action creator will take in an argument that is an object { ingredientName: ingredientName}
+        - the action creator takes it as payload
+
+3. Redux Thunk and Action Creators
+        You can add in componentDidMount() in BurgerBuilder.js but we do NOT do there, we do in action creator!
+        - npm install --save redux-thunk
+        - applyMiddle(thunk) in createStore
+        - added more action types: SET INGREDIENTS and FETCH ING FAILED
+        - created new action creator files for order and burgerBuilder
+        - created an index file to grab all the action creator methods + thunk methods
+        - working on burgerBuilder.js action creator file, now includes thunk methods for async call to Axios --> ingredients is now populated via Axios
+            - called in BurgerBuilder.js in componentDidMount()
+            - added more properties to mapStateToProps and mapDispatchToProps
+            - created new methods in the action creator for burgerBuilder.js file --> async code! Axios call!
+        - The mapping of properties were skewed because of how the object was taken from the database, we can manually order the ingredients if it mapStateToProps
+            - you do lose flexibility but since there's only four objects, it should be okay
+        - Working on order action creators!
+        
+        - Side: Looked at Modal code, it's just a div styled to go in and out. It uses the this.props.children to showcase the stuff between the opening and closing tags!
