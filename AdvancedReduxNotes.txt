@@ -30,12 +30,9 @@
             - creating thunk method for POST action
             - adding errorHandler possibly for the error message from axios
 
-            - Leaving off order handler!
             - Went on the bread crumbs of:
                 - looking at the methods for ContactData.js
-                - looking at the render of ContactData.js
-                - Tried the order now button, does not do anything!
-                - Thinking, where is he going to get the ID for the dispatch call
+                - looking at the render of ContactData.js!
                 
             Edit:
             - added more action creator methods for orders
@@ -52,7 +49,7 @@
                 - hard coded to fastest in ContactData.js, look at deliveryMethod property in state
             - using withRouter to pass in routing props and use push("/") after post call
             - using the purchased boolean value in order.js ACTION REDUCER to set the redirect BACK to "/" after the POST process has been dispatched
-            - EDIT: toolate, max uses onInitPurchase() so that when we visit Checkout page, the boolean value for state.order.purchase is FALSE so that it does NOT redirect to "/" ... nope.
+            - EDIT: too late, Max uses onInitPurchase() so that when we visit Checkout page, the boolean value for state.order.purchase is FALSE so that it does NOT redirect to "/" ... nope.
                 - it is TOO late in the Checkout.js, so do it on BurgerBuilder.js!
            
             - Fixing the PRICE since it does not change!:
@@ -67,5 +64,5 @@
 
 
         - Side: Looked at Modal code, it's just a div styled to go in and out. It uses the this.props.children to showcase the stuff between the opening and closing tags! and uses boolean values to show the backdrop
-        - Created addIngredient utility in burgerBuilder.js reducer, helps reduce clutter in reducer
+        - Created addIngredient utility in burgerBuilder.js reducer, helps reduce clutter in reducer, + the utility.js file to unpack oldstate and newstate
         - Relearned rendering for React Router

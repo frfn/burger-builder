@@ -100,7 +100,7 @@ const reducer = (state = initialState, action) => {
 					meat: action.ingredients.meat,
 				},
 				error: false,
-				totalPrice: 6,
+				totalPrice: 6, // hardcoded to restart the totalPrice, it was not going back to $6!
 			});
 		// return {
 		// 	...state,

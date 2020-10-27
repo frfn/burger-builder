@@ -277,7 +277,7 @@ class ContactData extends Component {
 			orderData: formData,
 		};
 
-		this.props.onBurgerOrder(order, this.props);
+		this.props.onBurgerOrder(order, this.props); // this.props was used for .push("/") , not needed since we redirect instead
 
 		// Axios call
 		// axios
@@ -401,7 +401,9 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withRouter(connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withErrorHandler(ContactData, axios)));
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	)(withErrorHandler(ContactData, axios))
+);

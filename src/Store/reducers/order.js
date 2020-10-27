@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 /* You can use the utility method here, but save yourself the time, you know how to do it */
 
 const initialState = {
-	orders: [],
+	orders: [], // orders are filled via axios call to database
 	loading: false,
 	purchased: false,
 };

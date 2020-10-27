@@ -30,6 +30,7 @@ export const purchaseBurger = (orderData, props) => {
 		axios
 			.post("/orders.json", orderData)
 			.then((response) => {
+				// response.data.name is GIVEN by the database
 				dispatch(purchaseBurgerSuccess(response.data.name, orderData));
 				// props.history.push("/");
 			})

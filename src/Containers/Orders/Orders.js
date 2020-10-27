@@ -17,6 +17,8 @@ class Orders extends Component {
 
 	componentDidMount() {
 		this.props.onFetchOrders();
+
+		/* MOVED TO ACTION CREATORS for ORDERS */
 		// axios
 		// 	.get("/orders.json")
 		// 	.then((res) => {
@@ -57,6 +59,7 @@ class Orders extends Component {
 		let orders = this.props.loading ? (
 			<Spinner />
 		) : (
+			/* If nothing to map, nothing will show. :) */
 			this.props.order.map((order) => {
 				return (
 					<Order

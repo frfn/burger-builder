@@ -6,7 +6,7 @@ import { Route, Redirect } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 
-import * as actions from "../../Store/actions/index";
+// import * as actions from "../../Store/actions/index";
 
 class Checkout extends Component {
 	constructor(props) {
@@ -17,7 +17,7 @@ class Checkout extends Component {
 			price: 0,
 		};
 	}
-	
+
 	// it's TOO late, even though the render is here, it does NOT set purchased to FALSE
 	/* componentWillMount() {
 		this.props.onInitPurchase(); // this sets state.order.purchased to FALSE so it doesnt redirect to "/"
@@ -55,6 +55,8 @@ class Checkout extends Component {
 	};
 
 	render() {
+		// redirect to root if no ingredients, bedcause error will occur
+		// you cannot map an undefined object
 		let summary = <Redirect to="/" />;
 
 		if (this.props.ings) {
@@ -114,6 +116,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
+/* We do not do it here because componentWillMount will be to late, we do ON BurgerBuilder.js */
 // const mapDispatchToProps = (dispatch) => {
 // 	return {
 // 		onInitPurchase: () => dispatch(actions.purchaseInit()),
@@ -122,4 +125,4 @@ const mapStateToProps = (state) => {
 
 // a function that returns an HOC function
 // connect(null, mapDispatchToProps) <-- if no stateToProps but want dispatchToProps
-export default connect(mapStateToProps, /* mapDispatchToProps */)(Checkout);
+export default connect(mapStateToProps /* mapDispatchToProps */)(Checkout);
