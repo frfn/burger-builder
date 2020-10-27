@@ -7,18 +7,65 @@
         - the action creator takes it as payload
 
 3. Redux Thunk and Action Creators
-        You can add in componentDidMount() in BurgerBuilder.js but we do NOT do there, we do in action creator!
+        You can add Axios call in componentDidMount() in BurgerBuilder.js but we do NOT do there, we do in action creator!
         - npm install --save redux-thunk
         - applyMiddle(thunk) in createStore
         - added more action types: SET INGREDIENTS and FETCH ING FAILED
         - created new action creator files for order and burgerBuilder
-        - created an index file to grab all the action creator methods + thunk methods
+        - created an index utility file to grab all the action creator methods + thunk methods
+        
         - working on burgerBuilder.js action creator file, now includes thunk methods for async call to Axios --> ingredients is now populated via Axios
             - called in BurgerBuilder.js in componentDidMount()
             - added more properties to mapStateToProps and mapDispatchToProps
             - created new methods in the action creator for burgerBuilder.js file --> async code! Axios call!
+        
         - The mapping of properties were skewed because of how the object was taken from the database, we can manually order the ingredients if it mapStateToProps
             - you do lose flexibility but since there's only four objects, it should be okay
-        - Working on order action creators!
+            - see the burgerBuilder.js and look at one of the cases, hard coded JS object so that the burger can be mapped correctly!
         
-        - Side: Looked at Modal code, it's just a div styled to go in and out. It uses the this.props.children to showcase the stuff between the opening and closing tags!
+        
+        - Working on order action creators!
+            - added some action types
+            - no "trying" action type, that will be apart of purchase burger anyways
+            - creating thunk method for POST action
+            - adding errorHandler possibly for the error message from axios
+
+            - Leaving off order handler!
+            - Went on the bread crumbs of:
+                - looking at the methods for ContactData.js
+                - looking at the render of ContactData.js
+                - Tried the order now button, does not do anything!
+                - Thinking, where is he going to get the ID for the dispatch call
+                
+            Edit:
+            - added more action creator methods for orders
+            - worked on orders reducer
+            - used purchaseBurger in ContactData through dispatch call ... still wondering why it takes two args ... id, orderData
+                - id will be from the database, orderData is the JSON that contains the ingredients
+            - the loading in orders is set to false -- the process has ended already, created the purchaseBurgerStart action creator to set loading to true.
+            - orders reducer has an array for orders... but we fetched the orders IN the database... weird. Why handle in redux.
+                - Strong feeling we'll fetch through thunk method later on.
+                - this just an example!
+            - fixed the no ingredient error by using redirect to the "/" root path, error was saying undefined cannot be mapped! Makes sense!
+            - combining reducers to USE the order reducer
+            - Error with delivery method... wtf? It did not have value in contact data
+                - hard coded to fastest in ContactData.js, look at deliveryMethod property in state
+            - using withRouter to pass in routing props and use push("/") after post call
+            - using the purchased boolean value in order.js ACTION REDUCER to set the redirect BACK to "/" after the POST process has been dispatched
+            - EDIT: toolate, max uses onInitPurchase() so that when we visit Checkout page, the boolean value for state.order.purchase is FALSE so that it does NOT redirect to "/" ... nope.
+                - it is TOO late in the Checkout.js, so do it on BurgerBuilder.js!
+           
+            - Fixing the PRICE since it does not change!:
+                - just hard coded it in burgerBuilder reducer, the init is called in componentDidMount so when it mounts, it resets the total price to 6
+            
+            - Adding Orders to Redux + ActionCreators/ThunkMethod!
+                - axios call to the orders to map out the orders!
+                - fetching asynchronously using thunk method and the new action creators!
+                
+            - Refacturing the Reducers, I knew it!
+                - tightening the reducer through a utility.js file and outsourcing the function and returning an object
+
+
+        - Side: Looked at Modal code, it's just a div styled to go in and out. It uses the this.props.children to showcase the stuff between the opening and closing tags! and uses boolean values to show the backdrop
+        - Created addIngredient utility in burgerBuilder.js reducer, helps reduce clutter in reducer
+        - Relearned rendering for React Router

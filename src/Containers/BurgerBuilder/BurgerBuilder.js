@@ -220,6 +220,9 @@ class BurgerBuilder extends Component {
 
 	// this is the CONTINUE button IN THE MODAL
 	continueHandler = () => {
+		// EDIT 4 -- adding this.props.onInitPurchase to set purchase value FOR order REDUCER to be false, so we DON'T redirect! componentWillMount is already TOO late!
+		this.props.onInitPurchase();
+
 		// EDIT 3 --
 		this.props.history.push("/checkout");
 
@@ -373,7 +376,8 @@ class BurgerBuilder extends Component {
 			<Aux>
 				{/* 
                 Modal CAN be here if styled with CSS. Without it, it will block content such
-                as the Burger and BuildControls!
+				as the Burger and BuildControls! play with the inline styling
+				two args for modal is for the backdrop ui
                  */}
 				<Modal decline={this.declineHandler} show={purchaseNow}>
 					{orderSummary}
@@ -390,9 +394,9 @@ BurgerBuilder.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		ingredients: state.ingredients,
-		totalPrice: state.totalPrice,
-		error: state.error,
+		ingredients: state.burgerBuilder.ingredients,
+		totalPrice: state.burgerBuilder.totalPrice,
+		error: state.burgerBuilder.error,
 	};
 };
 
@@ -416,6 +420,7 @@ const mapDispatchToProps = (dispatch) => {
 		// }),
 
 		onInitIngredients: () => dispatch(actionCreator.initIngredient()),
+		onInitPurchase: () => dispatch(actionCreator.purchaseInit()),
 	};
 };
 

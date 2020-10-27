@@ -8,6 +8,11 @@ import Input from "../../../Components/UI/Input/Input";
 
 // Redux
 import { connect } from "react-redux";
+import * as actions from "../../../Store/actions/index";
+
+// HOC
+import withErrorHandler from "../../../Components/HOC/withErrorHandler/withErrorHandler";
+import { withRouter } from "react-router";
 
 class ContactData extends Component {
 	componentDidMount() {
@@ -96,7 +101,7 @@ class ContactData extends Component {
 					],
 				},
 				/* For the troubleshoot, leave the delivery method to have NO value. */
-				// value: ''
+				value: "fastest",
 				// validation: {
 				// 	required: true,
 				// },
@@ -104,7 +109,7 @@ class ContactData extends Component {
 				// touch: false,
 			},
 		},
-		loading: false,
+		// loading: false,
 		formIsValid: false,
 	};
 
@@ -228,9 +233,13 @@ class ContactData extends Component {
 		return orderIsValid;
 	};
 
+	// e stands for event
 	orderHandler = (e) => {
 		e.preventDefault(); // stops reloading
-		this.setState({ loading: true });
+
+		// edit REDUX, no more loading state here
+		// this.setState({ loading: true });ß
+
 		/* Dummy Data */
 		// const order = {
 		// 	ingredients: this.props.ingredients,
@@ -268,17 +277,21 @@ class ContactData extends Component {
 			orderData: formData,
 		};
 
-		axios
-			.post("/orders.json", order)
-			.then((response) => {
-				console.log(response);
-				this.setState({ loading: false }); // for the spinner, loading animation
-				/* this is only possible BECAUSE the props are being passed from the previos component, Checkout.js */
-				this.props.history.push("/");
-			})
-			.catch((error) => {
-				this.setState({ loading: false });
-			});
+		this.props.onBurgerOrder(order, this.props);
+
+		// Axios call
+		// axios
+		// 	.post("/orders.jsonas", order)
+		// 	.then((response) => {
+		// 		console.log(response);
+		// 		this.setState({ loading: false }); // for the spinner, loading animation
+		// 		/* this is only possible BECAUSE the props are being passed from the previos component, Checkout.js */
+		// 		this.props.history.push("/");
+		// 	})
+		// 	.catch((error) => {
+		// 		this.setState({ loading: true });
+		// 		this.props.history.push("/404") // loading error
+		// 	});
 	};
 
 	render() {
@@ -359,7 +372,7 @@ class ContactData extends Component {
 
 		/* When Pressing the Button, no indication that it has been pressed. Grab a spinner! */
 		/* if loading is true, this becomes a spinner */
-		if (this.state.loading) {
+		if (this.props.loading) {
 			form = <Spinner />;
 		}
 
@@ -374,9 +387,21 @@ class ContactData extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		ings: state.ingredients,
-		price: state.totalPrice,
+		ings: state.burgerBuilder.ingredients,
+		price: state.burgerBuilder.totalPrice,
+		loading: state.order.loading,
 	};
 };
 
-export default connect(mapStateToProps)(ContactData);
+// props was used for the withRouter, routing props to use push("/") to root
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onBurgerOrder: (orderData, props) =>
+			dispatch(actions.purchaseBurger(orderData, props)),
+	};
+};
+
+export default withRouter(connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withErrorHandler(ContactData, axios)));

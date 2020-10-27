@@ -12,6 +12,7 @@ export default class App extends Component {
 			<Layout>
 				{/* you can also use 'exact', though it is not required for this setup | Last Route for URL catching */}
 				<Switch>
+					<Route path='/404' render={() => <div>404 ERROR</div>}/>
 					<Route path='/checkout' component={Checkout} />
 					<Route path='/orders' component={Orders} />
 					<Route path='/' component={BurgerBuilder} />

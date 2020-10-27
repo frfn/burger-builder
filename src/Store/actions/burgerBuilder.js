@@ -32,6 +32,7 @@ export const fetchIngredientsFailed = () => {
 	};
 };
 
+// THUNK METHOD -- two action creators are being used
 const initIngredient = () => {
 	return (dispatch) => {
 		axios

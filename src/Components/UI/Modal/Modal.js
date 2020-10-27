@@ -26,18 +26,18 @@ class Modal extends Component {
 			<Aux>
 				{/* this shows the backdrop! that's it, a gray overlay */}
 				{/* the decline is just a function that turns on and off a boolean value: true or false */}
-				<Backdrop decline={decline} show={show} />
+				<Backdrop decline={decline} show={show} /> 
 				<div
 					className={styles.Modal}
 					/* 
                     The style is LITERALLY how the modal is showing...
-                    Without it... the modal WILL SHOW RIGHT ON TOP, tricky :D
+                    Without it... the modal WILL SHOW RIGHT ON TOP, tricky
                     */
 					style={{
 						/* Takes the modal UP and away */
 						transform: show
 							? "translateY(0)" // this goes middle of screen
-							: "translateY(0)",
+							: "translateY(-100vh)",
 
 						/* This controls the opacity, 0-none ... 1-full */
 						opacity: show ? "1" : "0",

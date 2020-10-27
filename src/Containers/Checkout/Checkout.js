@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import ContactData from "./ContactData/ContactData";
 import CheckoutSummary from "../../Components/Order/CheckoutSummary/CheckoutSummary";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
+
+import * as actions from "../../Store/actions/index";
 
 class Checkout extends Component {
 	constructor(props) {
@@ -15,7 +17,11 @@ class Checkout extends Component {
 			price: 0,
 		};
 	}
-
+	
+	// it's TOO late, even though the render is here, it does NOT set purchased to FALSE
+	/* componentWillMount() {
+		this.props.onInitPurchase(); // this sets state.order.purchased to FALSE so it doesnt redirect to "/"
+	} */
 	// componentDidMount() {
 
 	// 	// EDIT 1 --
@@ -49,54 +55,71 @@ class Checkout extends Component {
 	};
 
 	render() {
-		return (
-			<div>
-				<CheckoutSummary
-					checkoutCancelled={this.checkoutCancelledHandler}
-					checkoutContinued={this.checkoutContinuedHandler}
+		let summary = <Redirect to="/" />;
 
-					// why we connected to the STORE, to show the BURGER.
-					ingredients={this.props.ings}
-				/>
-				{/* .path or .url works the same, nest ROUTE */}
-				<Route
-					// we used like because it seems like you need to
-					// you have to <Route to='contact-data' /> in App.js to make it work WITHOUT the other URL words ex. (checkout/etc/etc/URL)
-					// here we are using the CURRENT url + /contact-data
-					// Why? by going to this current path, it renders ContactData component
-					// How? continueHandler replaces URL with exact URL of /contact-data route
+		if (this.props.ings) {
+			// console.log(this.props.purchased)
+			const purchasedRedirect = this.props.purchased ? (
+				<Redirect to="/" />
+			) : null;
+			summary = (
+				<div>
+					{purchasedRedirect}
+					<CheckoutSummary
+						checkoutCancelled={this.checkoutCancelledHandler}
+						checkoutContinued={this.checkoutContinuedHandler}
+						// why we connected to the STORE, to show the BURGER.
+						ingredients={this.props.ings}
+					/>
+					{/* .path or .url works the same, nest ROUTE */}
+					<Route
+						// we used like because it seems like you need to
+						// you have to <Route to='contact-data' /> in App.js to make it work WITHOUT the other URL words ex. (checkout/etc/etc/URL)
+						// here we are using the CURRENT url + /contact-data
+						// Why? by going to this current path, it renders ContactData component
+						// How? continueHandler replaces URL with exact URL of /contact-data route
 
-					// At this URL, show the component (ContactData) at the URL path
-					path={this.props.match.path + "/contact-data"}
+						// At this URL, show the component (ContactData) at the URL path
+						path={this.props.match.path + "/contact-data"}
+						// EDIT 2 -- back to it, commented out but now we're using this.
+						component={ContactData}
 
-					// EDIT 2 -- back to it, commented out but now we're using this.
-					component={ContactData}
+						// EDIT 1 --
+						/* very important that we USE render if we want to pass properties WHILE using routing */
+						// render={(props) => (
+						// 	<ContactData
+						// 		ingredients={this.props.ings}
+						// 		// totalPrice={this.props.price}
 
-					// EDIT 1 --
-					/* very important that we USE render if we want to pass properties WHILE using routing */
-					// render={(props) => (
-					// 	<ContactData
-					// 		ingredients={this.props.ings}
-					// 		// totalPrice={this.props.price}
+						// 		// + all the routing properties!
+						// 		// ex. history, location, match, staticContext
+						// 		{...props}
+						// 	/>
+						// )}
+					/>
+				</div>
+			);
+		}
 
-					// 		// + all the routing properties!
-					// 		// ex. history, location, match, staticContext
-					// 		{...props}
-					// 	/>
-					// )}
-				/>
-			</div>
-		);
+		// either a Redirect if no ings OR the burger + contact data
+		return summary;
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		ings: state.ingredients,
+		ings: state.burgerBuilder.ingredients,
 		// price: state.totalPrice,
+		purchased: state.order.purchased,
 	};
 };
 
+// const mapDispatchToProps = (dispatch) => {
+// 	return {
+// 		onInitPurchase: () => dispatch(actions.purchaseInit()),
+// 	};
+// };
+
 // a function that returns an HOC function
 // connect(null, mapDispatchToProps) <-- if no stateToProps but want dispatchToProps
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, /* mapDispatchToProps */)(Checkout);
