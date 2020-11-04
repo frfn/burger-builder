@@ -18,6 +18,10 @@ class Checkout extends Component {
 		};
 	}
 
+	componentDidMount() {
+		// console.log(this.props); wanted to see the token
+	}
+
 	// it's TOO late, even though the render is here, it does NOT set purchased to FALSE
 	/* componentWillMount() {
 		this.props.onInitPurchase(); // this sets state.order.purchased to FALSE so it doesnt redirect to "/"
@@ -113,6 +117,7 @@ const mapStateToProps = (state) => {
 		ings: state.burgerBuilder.ingredients,
 		// price: state.totalPrice,
 		purchased: state.order.purchased,
+		token: state.auth.token,
 	};
 };
 

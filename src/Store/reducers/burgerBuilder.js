@@ -14,6 +14,9 @@ const initialState = {
 	// LOOK HERE! Also part of state -- price is here b/c it will be easier to manage
 	totalPrice: 6,
 	error: false,
+
+	/* after authenticating, ings will remain */
+	building: false,
 };
 
 const INGREDIENT_PRICES = {
@@ -45,6 +48,9 @@ const addIngredient = (state, action) => {
 	const updatedState = {
 		ingredients: updatedIngredient,
 		totalPrice: updatedPrice,
+
+		// auth related
+		building: true,
 	};
 
 	// console.log(currentState, currentIngredients, updateIngredient, updatePrice)
@@ -66,6 +72,9 @@ const removeIngredient = (state, action) => {
 			...updatedIngredient,
 		},
 		totalPrice: updatedPrice,
+
+		// auth related
+		building: true,
 	};
 };
 
@@ -101,6 +110,7 @@ const reducer = (state = initialState, action) => {
 				},
 				error: false,
 				totalPrice: 6, // hardcoded to restart the totalPrice, it was not going back to $6!
+				building: false,
 			});
 		// return {
 		// 	...state,

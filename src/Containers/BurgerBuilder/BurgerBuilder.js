@@ -206,15 +206,21 @@ class BurgerBuilder extends Component {
 
 	// this makes the MODAL show
 	purchaseHandler = () => {
-		this.setState({ purchaseNow: true }, () => {
-			console.log(this.state.purchaseNow);
-		});
+		// since the ORDERNOW button changed, sign up redirects to /auth
+		if (this.props.isAuthenticated) {
+			this.setState({ purchaseNow: true }, () => {
+				// console.log(this.state.purchaseNow);
+			});
+		} else {
+			this.props.onSetAuthRedirectPath("/checkout"); // change the URL Path to /checkout
+			this.props.history.push("/auth"); // continue to auth component
+		}
 	};
 
 	// makes the MODAL hide
 	declineHandler = () => {
 		this.setState({ purchaseNow: false }, () => {
-			console.log(this.state.purchaseNow);
+			// console.log(this.state.purchaseNow);
 		});
 	};
 
@@ -354,6 +360,8 @@ class BurgerBuilder extends Component {
 							this.props.ingredients
 						)} // just returns a BOOLEAN value
 						order={this.purchaseHandler}
+						// auth
+						isAuth={this.props.isAuthenticated}
 					/>
 				</Aux>
 			);
@@ -397,6 +405,7 @@ const mapStateToProps = (state) => {
 		ingredients: state.burgerBuilder.ingredients,
 		totalPrice: state.burgerBuilder.totalPrice,
 		error: state.burgerBuilder.error,
+		isAuthenticated: state.auth.token !== null,
 	};
 };
 
@@ -421,6 +430,9 @@ const mapDispatchToProps = (dispatch) => {
 
 		onInitIngredients: () => dispatch(actionCreator.initIngredient()),
 		onInitPurchase: () => dispatch(actionCreator.purchaseInit()),
+
+		onSetAuthRedirectPath: (path) =>
+			dispatch(actionCreator.setAuthRedirectPath(path)),
 	};
 };
 

@@ -38,9 +38,10 @@ class ContactData extends Component {
 				value: "",
 				validation: {
 					required: true,
+					minLength: 5,
 				},
 				valid: false,
-				touch: false,
+				touched: false,
 				errorMessage: "Name...",
 			},
 			email: {
@@ -49,9 +50,10 @@ class ContactData extends Component {
 				value: "",
 				validation: {
 					required: true,
+					minLength: 5,
 				},
 				valid: false,
-				touch: false,
+				touched: false,
 				errorMessage: "Email Address...",
 			},
 			street: {
@@ -60,9 +62,10 @@ class ContactData extends Component {
 				value: "",
 				validation: {
 					required: true,
+					minLength: 5,
 				},
 				valid: false,
-				touch: false,
+				touched: false,
 				errorMessage: "Street...",
 			},
 			country: {
@@ -71,9 +74,10 @@ class ContactData extends Component {
 				value: "",
 				validation: {
 					required: true,
+					minLength: 5,
 				},
 				valid: false,
-				touch: false,
+				touched: false,
 				errorMessage: "Country...",
 			},
 			postalCode: {
@@ -89,7 +93,7 @@ class ContactData extends Component {
 					maxLength: 5,
 				},
 				valid: false,
-				touch: false,
+				touched: false,
 				errorMessage: "ZIP Code...",
 			},
 			deliveryMethod: {
@@ -102,11 +106,11 @@ class ContactData extends Component {
 				},
 				/* For the troubleshoot, leave the delivery method to have NO value. */
 				value: "fastest",
-				// validation: {
-				// 	required: true,
-				// },
-				// valid: false,
-				// touch: false,
+				validation: {
+					required: true,
+				},
+				valid: false,
+				touched: false,
 			},
 		},
 		// loading: false,
@@ -143,23 +147,50 @@ class ContactData extends Component {
 
 		/* by changing isValid to true and adding && isValid, it is going to do what we want */
 		let isValid = true; // instead of false
+		if (!rules) {
+			return true;
+		}
 
 		if (rules.required) {
-			/* .trim() removes white spaces*/
 			isValid = value.trim() !== "" && isValid;
 		}
 
-		/* want more rules? here's an ex! You can be creative here! */
 		if (rules.minLength) {
 			isValid = value.length >= rules.minLength && isValid;
 		}
 
 		if (rules.maxLength) {
-			isValid = value.length <= rules.minLength && isValid;
+			isValid = value.length <= rules.maxLength && isValid;
 		}
 
-		/* true or false */
+		if (rules.isEmail) {
+			const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+			isValid = pattern.test(value) && isValid;
+		}
+
+		if (rules.isNumeric) {
+			const pattern = /^\d+$/;
+			isValid = pattern.test(value) && isValid;
+		}
+
 		return isValid;
+
+		// if (rules.required) {
+		// 	/* .trim() removes white spaces*/
+		// 	isValid = value.trim() !== "" && isValid;
+		// }
+
+		// /* want more rules? here's an ex! You can be creative here! */
+		// if (rules.minLength) {
+		// 	isValid = value.length >= rules.minLength && isValid;
+		// }
+
+		// if (rules.maxLength) {
+		// 	isValid = value.length <= rules.minLength && isValid;
+		// }
+
+		// /* true or false */
+		// return isValid;
 	};
 
 	onChangeHandler = (event, inputIdentifier) => {
@@ -180,14 +211,14 @@ class ContactData extends Component {
 		updatedFormElement.value = event.target.value;
 
 		// for validity, checkValidity returns a boolean value
-		if (inputIdentifier !== "deliveryMethod") {
-			updatedFormElement.valid = this.checkValidity(
-				updatedFormElement.value,
-				updatedFormElement.validation
-			);
-		}
+		// if (inputIdentifier !== "deliveryMethod") {
+		updatedFormElement.valid = this.checkValidity(
+			updatedFormElement.value,
+			updatedFormElement.validation
+		);
+		// }
 
-		updatedFormElement.touch = true; // maybe if event.target.value > 0
+		updatedFormElement.touched = true; // maybe if event.target.value > 0
 
 		/* this works because FALSE overrides TRUE in the truth table for && */
 		/* I created my own helper method */
@@ -275,9 +306,11 @@ class ContactData extends Component {
 					} 
 			*/
 			orderData: formData,
+			userId: this.props.userId,
 		};
 
-		this.props.onBurgerOrder(order, this.props); // this.props was used for .push("/") , not needed since we redirect instead
+		console.log(order.userId);
+		this.props.onBurgerOrder(order, this.props.token, this.props); // this.props was used for .push("/") , not needed since we redirect instead
 
 		// Axios call
 		// axios
@@ -347,21 +380,26 @@ class ContactData extends Component {
 			/* note the onSubmit function, here instead of Button's onSubmit */
 			<form onSubmit={this.orderHandler} className={classes.Form}>
 				{formElementsArray.map((formElement) => {
+					// console.log(formElement);
 					return (
 						/* Passing in so much shit. */
 						<Input
 							// label={formElement.id}
-							changed={(event) =>
-								/* Why TWO? event is a gimme, formElement.id is for input identifer SO to access .value property */
-								this.onChangeHandler(event, formElement.id)
+							changed={
+								(event) =>
+									/* Why TWO? event is a gimme, formElement.id is for input identifer SO to access .value property */
+									this.onChangeHandler(event, formElement.id) // updates the values of each input
 							}
 							key={formElement.id} // needed for .map()
 							elementType={formElement.config.elementType}
 							elementConfig={formElement.config.elementConfig}
 							value={formElement.config.value}
+							// for error check and validation check
 							invalid={!formElement.config.valid} // why '!' -- it is so that the Input becomes user friendly, no red CSS
-							shouldValidate={formElement.config.validation} // if property has a valid property, run CSS check in Input.js
-							touch={formElement.config.touch} // one time thing, sees if user goes on field, used for CSS
+							shouldValidate={
+								formElement.config.validation.required
+							} // if property has a valid property, run CSS check in Input.js
+							touched={formElement.config.touched} // one time thing, sees if user goes on field, used for CSS
 							errorMessage={formElement.config.errorMessage} // an error message that will display on bottom of field if incorrect
 						/>
 					);
@@ -390,14 +428,16 @@ const mapStateToProps = (state) => {
 		ings: state.burgerBuilder.ingredients,
 		price: state.burgerBuilder.totalPrice,
 		loading: state.order.loading,
+		token: state.auth.token,
+		userId: state.auth.userId,
 	};
 };
 
 // props was used for the withRouter, routing props to use push("/") to root
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onBurgerOrder: (orderData, props) =>
-			dispatch(actions.purchaseBurger(orderData, props)),
+		onBurgerOrder: (orderData, token, props) =>
+			dispatch(actions.purchaseBurger(orderData, token, props)),
 	};
 };
 

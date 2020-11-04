@@ -16,7 +16,7 @@ class Modal extends Component {
 
 	/* snapshot takes info from getSnapshotBeforeUpdate(prevProps, prevState) method, returns an object. Look at part4 folder, and see the classes that  */
 	componentWillUpdate(prevState, prevProps, snaphot) {
-		console.log("[Modal] will update!");
+		// console.log("[Modal] will update!");
 	}
 
 	render() {
@@ -26,7 +26,7 @@ class Modal extends Component {
 			<Aux>
 				{/* this shows the backdrop! that's it, a gray overlay */}
 				{/* the decline is just a function that turns on and off a boolean value: true or false */}
-				<Backdrop decline={decline} show={show} /> 
+				<Backdrop decline={decline} show={show} />
 				<div
 					className={styles.Modal}
 					/* 

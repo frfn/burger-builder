@@ -11,9 +11,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
 				error: null,
 			};
 		}
-		
+
 		// By grabbing the code from the constructor and putting it into WILL MOUNT, it fixed the Modal Network Error. thank god.
-		componentWillMount () {
+		componentWillMount() {
 			// Global Listeners -- interceptors
 			// use must wrtie like this though you don't need to use req variable
 
@@ -32,9 +32,14 @@ const withErrorHandler = (WrappedComponent, axios) => {
 			this.resInterceptor = axios.interceptors.response.use(
 				(res) => res,
 				(error) => {
-					this.setState({
-						error: error,
-					});
+					this.setState(
+						{
+							error: error,
+						},
+						() => {
+							console.log(this.state.error.response);
+						}
+					);
 					// return error;
 				}
 			);
@@ -78,7 +83,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
 						decline={this.errorConfirmHandler}
 					>
 						{/* The message is from Firebase endpoint */}
-						{this.state.error ? this.state.error.message : null}
+						{this.state.error
+							? this.state.error.response.data.error
+							: null}
 					</Modal>
 					<WrappedComponent {...this.props} />
 				</Aux>

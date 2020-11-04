@@ -16,7 +16,11 @@ class Orders extends Component {
 	// };
 
 	componentDidMount() {
-		this.props.onFetchOrders();
+		// if not signed in, token is null
+		const token = localStorage.getItem("token");
+		const userId = localStorage.getItem("userId");
+		// this.props.onFetchOrders(this.props.token);
+		this.props.onFetchOrders(userId, token);
 
 		/* MOVED TO ACTION CREATORS for ORDERS */
 		// axios
@@ -61,6 +65,7 @@ class Orders extends Component {
 		) : (
 			/* If nothing to map, nothing will show. :) */
 			this.props.order.map((order) => {
+				console.log(order);
 				return (
 					<Order
 						key={order.id}
@@ -80,12 +85,16 @@ export const mapStateToProps = (state) => {
 	return {
 		loading: state.order.loading,
 		order: state.order.orders,
+		token: state.auth.token,
+		// userId: state.auth.userId
 	};
 };
 
 export const mapDispatchToProps = (dispatch) => {
 	return {
-		onFetchOrders: () => dispatch(actions.fetchOrders()),
+		// had to add userId argument so we can use to fetch specific user id
+		onFetchOrders: (userId, token) =>
+			dispatch(actions.fetchOrders(userId, token)),
 	};
 };
 

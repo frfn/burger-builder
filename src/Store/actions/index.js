@@ -6,3 +6,4 @@ export {
 	initIngredient,
 } from "./burgerBuilder"; // initIngrdient is a thunk method
 export { purchaseBurger, purchaseInit, fetchOrders } from "./order"; // purchaseBurger + fetchOrders is async
+export { auth, logout, setAuthRedirectPath, authCheckState } from "./auth";
