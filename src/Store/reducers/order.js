@@ -11,12 +11,12 @@ const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		// order post
 		case actionTypes.PURCHASE_BURGER_SUCCESS:
-			console.log(action.orderData);
+			// console.log(action.orderData);
 			const newOrder = {
 				...action.orderData,
 				id: action.orderId,
 			};
-			console.log(newOrder);
+			// console.log(newOrder);
 			return {
 				...state,
 				loading: false,

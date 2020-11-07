@@ -109,7 +109,7 @@ class ContactData extends Component {
 				validation: {
 					required: true,
 				},
-				valid: false,
+				valid: true,
 				touched: false,
 			},
 		},
@@ -309,7 +309,7 @@ class ContactData extends Component {
 			userId: this.props.userId,
 		};
 
-		console.log(order.userId);
+		// console.log(order.userId);
 		this.props.onBurgerOrder(order, this.props.token, this.props); // this.props was used for .push("/") , not needed since we redirect instead
 
 		// Axios call

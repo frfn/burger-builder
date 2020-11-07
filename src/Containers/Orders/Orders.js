@@ -65,7 +65,7 @@ class Orders extends Component {
 		) : (
 			/* If nothing to map, nothing will show. :) */
 			this.props.order.map((order) => {
-				console.log(order);
+				// console.log(order);
 				return (
 					<Order
 						key={order.id}

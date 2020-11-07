@@ -43,7 +43,7 @@ const initIngredient = () => {
 			})
 			.catch((error) => {
 				dispatch(fetchIngredientsFailed());
-				console.log(error);
+				// console.log(error);
 			});
 	};
 };

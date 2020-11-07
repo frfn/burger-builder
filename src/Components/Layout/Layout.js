@@ -21,10 +21,10 @@ class Layout extends Component {
 		this.setState(
 			{
 				showSideDrawer: false,
-			},
-			() => {
-				console.log("i am closed");
 			}
+			// () => {
+			// 	console.log("i am closed");
+			// }
 		);
 	};
 

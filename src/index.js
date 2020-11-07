@@ -29,6 +29,11 @@ import authReducer from "./Store/reducers/auth";
 // composed middleware/enhancers
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+// does not work for me, but Redux Tool is only for Development Side!
+/* 
+const composeEnhancer = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+*/
+
 // combining reducer
 const rootReducer = combineReducers({
 	burgerBuilder: burgerBuilderReducer,

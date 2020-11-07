@@ -1,0 +1,74 @@
+Contact Data: valid is TRUE, input field always will have a a value SINCE it is drop down
+
+** IMPORTANT OPTIMIZATION:
+    lazy loading
+
+    - How we load our routes for more efficient and optimized performance
+        We might never visit certain routes!
+            - Let's load them asynchronously!
+
+1. loading was set to false in purchaseBurgerStart -- DID NOT NEED
+2. signing in when burger is created, clicking on sign in, redirect path does not go to /checkout anymore
+    it does not render Auth.js anymore in App.js, if not rendered, it does not run code to redirect to /checkout
+    - Fix: just put the <Route> for /auth back!
+3. CSS for centering burger pictures! 
+    - Fix: 500px has been commented out for bigger screens, 80% all the way through, mobile and desktop
+4. Side Drawer not closing when clicking on Nav Item, CSS is very very important, if you need it out of the way, get it out of your way with CSS
+    - utilize the function in Layout.js, closed function which is the sideDrawerClosedHandler(), a boolean value to show the side drawer!
+
+Yay!
+
+1. Using updateObject(oldState, newState) everywhere!
+    Created /shared folder in the /src folder! This is a function that the WHOLE application can use, makes sense to put in here!
+    you can use udpateObject() in:
+    - ContactData.js
+    - Auth.js
+        inputChangedHandler()
+    - reducers
+        auth.js
+        order.js
+        burgerBuilder.js
+
+2. Using checkValidity(value, rules)
+    Will outsource since multiple files can use code
+    Used in Auth.js + ContactData.js
+    - checks if the fields are filled and valid!
+
+Woohoo!
+
+1. Using Environment Variables!
+    - Protect code? Right now you can see the Redux activity in Google Redux Dev Tool.
+    Make it a bit HARDER to access, and see!
+
+    - Only see tool while in Development mode, and not do it on production mode
+        Use Environment Variables!!
+
+        Not applicable for me BUT
+        /config folder --> env.js --> add environment variables
+
+Remove CONSOLE LOGS!
+    Just commented them out, nothing special, went on finding all console.logs() and just commented out so we don't see in prod mode
+
+    flexer@gmail.com -- burger
+    flexernf@gmail.com -- burger
+    flex@flex.com -- flexer
+    nicole@nicole.com -- 123456
+
+2. LAZY LOADING. 
+    Max uses the asyncComponent.js
+
+    I'll try to implement the lazy() + React.Suspense
+    - it was pretty easy,
+        all steps were done in App.js
+        1. import lazy and Suspense
+        2. create const variables with lazy()
+        3. use variables in the component={} for routes
+        4. make sure that the variables HIGHER component is wrapped with <Suspense>
+
+    In the End, it didn't matter, I used Max's asyncComponent code.
+    Suspense is a trip... smh
+
+    Sometimes Lazy Loading is NOT efficient, 
+    big file? Then use it.
+
+    

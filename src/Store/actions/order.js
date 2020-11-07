@@ -34,13 +34,13 @@ export const purchaseBurger = (orderData, token, props) => {
 				orderData
 			) // by posting, this adds on to the data
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				// response.data.name is GIVEN by the database
 				dispatch(purchaseBurgerSuccess(response.data.name, orderData));
 				// props.history.push("/");
 			})
 			.catch((error) => {
-				console.log(error);
+				// console.log(error);
 				dispatch(purchaseBurgerFail(error));
 			});
 	};
@@ -77,8 +77,8 @@ export const fetchOrders = (userId, token) => {
 	// getState, gets the Central Store state!!
 	return (dispatch, getState) => {
 		dispatch(fetchOrdersStart());
-		console.log(userId);
-		console.log(token);
+		// console.log(userId);
+		// console.log(token);
 		axios
 
 			/* 
@@ -92,9 +92,9 @@ export const fetchOrders = (userId, token) => {
 			*/
 
 			//auth?= is a query param
-			.get(`/orders/${userId}.json?auth=` + token) // auth IS a variable that is explicitly used in Firebase
+			.get(`/orders/${userId}.json?auth=${token}`) // auth IS a variable that is explicitly used in Firebase
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				if (res) {
 					const fetchedOrders = [];
 					for (let order in res.data) {
@@ -103,12 +103,12 @@ export const fetchOrders = (userId, token) => {
 							id: order,
 						});
 					}
-					console.log(getState());
+					// console.log(getState());
 					dispatch(fetchOrdersSuccess(fetchedOrders));
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				// console.log(err);
 				dispatch(fetchOrdersFail(err));
 			});
 	};

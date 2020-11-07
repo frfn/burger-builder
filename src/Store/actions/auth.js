@@ -61,7 +61,7 @@ export const auth = (email, password, isSignup) => {
 		axios
 			.post(url, authData)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 
 				// Date().getTime() returns the time in milliseconds
 				// the expiresIn is multiplied by 1000 to make 3600 to hour!
@@ -78,8 +78,9 @@ export const auth = (email, password, isSignup) => {
 			})
 			// axios wraps the error object! check the two console logs! The first log does not show the response data AT ALL.
 			.catch((error) => {
+				// console.log(error);
+				// console.log(error.response);
 				console.log(error);
-				console.log(error.response);
 				dispatch(authFail(error.response.data.error.message));
 			});
 	};

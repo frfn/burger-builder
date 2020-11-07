@@ -1,13 +1,39 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import Layout from "../../Components/Layout/Layout";
 import BurgerBuilder from "../BurgerBuilder/BurgerBuilder";
+
 import Checkout from "../Checkout/Checkout";
 import Orders from "../../Containers/Orders/Orders";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import Auth from "../../Containers/Auth/Auth";
+
+import Spinner from "../../Components/UI/Spinner/Spinner";
+
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+
 import Logout from "../Auth/Logout/Logout";
 import { connect } from "react-redux";
 import * as actions from "../../Store/actions/index";
+
+// React Suspense
+// const asyncCheckout = lazy(() => import("../../Containers/Checkout/Checkout"));
+// const asyncAuth = lazy(() => import("../../Containers/Auth/Auth"));
+// const asyncOrders = lazy(() => import("../../Containers/Orders/Orders"));
+
+// asyncComponent Way
+
+import asyncComponent from "../../Components/HOC/asyncComponent/asyncComponent";
+
+const asyncCheckout = asyncComponent(() => {
+	return import("../../Containers/Checkout/Checkout");
+});
+
+const asyncOrders = asyncComponent(() => {
+	return import("../../Containers/Orders/Orders");
+});
+
+const asyncAuth = asyncComponent(() => {
+	return import("../../Containers/Auth/Auth");
+});
 
 class App extends Component {
 	componentDidMount() {
@@ -19,7 +45,7 @@ class App extends Component {
 
 		let routes = (
 			<Switch>
-				<Route path="/auth" component={Auth} />
+				<Route path="/auth" component={asyncAuth} />
 				<Route path="/404" render={() => <div>404 ERROR</div>} />
 				<Route path="/" component={BurgerBuilder} />
 				{/* <Route component={BurgerBuilder} /> */}
@@ -31,10 +57,11 @@ class App extends Component {
 		if (this.props.isAuth) {
 			routes = (
 				<Switch>
+					<Route path="/auth" component={asyncAuth} />
 					<Route path="/logout" component={Logout} />
 					<Route path="/404" render={() => <div>404 ERROR</div>} />
-					<Route path="/checkout" component={Checkout} />
-					<Route path="/orders" component={Orders} />
+					<Route path="/checkout" component={asyncCheckout} />
+					<Route path="/orders" component={asyncOrders} />
 					<Route path="/" component={BurgerBuilder} />
 					<Redirect to="/" />
 				</Switch>
@@ -43,8 +70,11 @@ class App extends Component {
 
 		return (
 			<Layout>
+				{/* <Suspense fallback={<Spinner />}> */}
 				{/* you can also use 'exact', though it is not required for this setup | Last Route for URL catching */}
+
 				{routes}
+				{/* </Suspense> */}
 			</Layout>
 		);
 	}
