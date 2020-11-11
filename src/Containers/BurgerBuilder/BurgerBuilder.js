@@ -24,7 +24,7 @@ import * as actionCreator from "../../Store/actions/index";
 // };
 
 /* This is a Stateful Class. It is in Container folder. */
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 	constructor(props) {
 		super(props);
 
