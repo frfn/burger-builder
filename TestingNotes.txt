@@ -75,10 +75,28 @@ Test!
         Had to delete package-lock.json and node_modules, fixed by 
         'npm install' -- installs everything back Thank God.
 
-    
+    Continuing:
+        Test has passed.
+        - Test Suites: is describe()
+        - Tests:       is it()
 
-    
+    take note, you can pass props in, in shallow()
+    .setProps( { key: value } ) AWESOME. cool for testing and setting props!!
 
+    MOCK FUNCTIONS: I've seen this from Brook's app
+    AKA 'spies', it lets you peek on the behavior of a function that is called indirectly by some other code rather than testing the output
+    - means, 'replaced'
+
+    mock is a function that will return a function with mock data
+
+    ENZYME DOCS, look at that if you want more in depth testings!
+    - airbnb.io
+
+    - Full Rendering renders the whole tree 
+        import { mount } from ...
+
+    Testing for a SPECIFIC NavigationItem /logout:
+        
 
 
 
