@@ -1,0 +1,84 @@
+Testing React Apps!
+"Clicking Around" Doesn't Do It!
+
+Testing is complex, and you create and write automated tests! What does that mean right? We'll learn.
+This will be an introduction to writing Unit Tests for React Apps built with create-react-app
+
+Testing?
+    - Writing automated tests
+    There is a work flow that a developer must go through
+    build app --> test manually and click around --> UNIT TESTS and AUTOMATIC TESTS --> ship app to server
+
+    By doing tests, we're seeing what breaks our application/see how the application works with the unit tests!!
+    In doing so, we are writing test that will run automatically and will test a tiny fraction of the application (unit testing!)
+
+    TEST DRIVEN DEVELOPMENT (TDD) ?
+        - Puts the TESTS first in the application work flow
+        - writing tests before any application code
+        - By doing so, step by step testing will ensure less failures!
+
+    Why Test?
+        - component should output Hello
+        - component should always render personData
+        - component should always receive persons prop
+        - component should always receive newPerson component when editable prop is received
+
+        These are possible tests that MIGHT fail. That's why testing is needed for application building! 
+        Clicking around just does NOT cut it.
+
+        By adding new features, these requirements might fail, so test, test, test!!
+    
+Testing Tools + Unit Testing!
+    
+    Testing Tools
+        - Test Runner
+        Executes the tests and running the code + providing validation library!
+        Does not run in a browser, just emulated in a browser which is cool, create-react-app produces an env where testing is already pre configured
+
+        - Jest 
+        Popular testing tool
+
+        - Testing Utilites
+            - Simulate the React App
+                - React Test Utils
+                - Enzyme! --> made by the Airbnb & React team
+
+What Not To Test
+    - Libraries.. no need to test if know they work.
+    - Don't test complex connections, simple ones like if the button works!
+        then follow the breadcrumbs it leaves, like, does it trigger the method(), does the prop pass into the component?
+        only test to see the React Component renders correctly
+
+What to Test
+    - Test isolated units
+    - Test conditional outputs
+        if TRUE then cool, if FALSE then it will do this.
+        Make SURE they happen though.
+    
+    Faking data is usually how testing goes.
+
+Dependencies (three packages)
+    Installing Enzyme for UNIT TESTING
+        npm i --save 
+        - enzyme 
+        - react-test-renderer 
+        - enzyme-adapter-react-16
+        
+Test!
+    Test a component! Functional, Container, Redux!
+
+    Testing NavItems component
+        - Go to Components/NavigationItems/ for test file
+
+    DRAWBACK.
+        Lol fixed though, got fucked by installing Jest manually, don't.
+        Had to delete package-lock.json and node_modules, fixed by 
+        'npm install' -- installs everything back Thank God.
+
+    
+
+    
+
+
+
+

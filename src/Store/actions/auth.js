@@ -43,12 +43,17 @@ export const checkAuthTimeout = (expirationTime) => {
 export const auth = (email, password, isSignup) => {
 	return (dispatch) => {
 		dispatch(authStart()); // loading
+
+		// This object MUST be in this form so that it can talk with server. IT MUST BE.
 		// this comes from firebase, it's the setup you have to push to get a REST response back
 		const authData = {
 			email: email,
 			password: password,
 			returnSecureToken: true,
 		};
+		// This the REST API structure that I have studied about, it will need certain information to COMMUNICATE with server,
+		// server will then reply with a response, there we will USE that response as shown below.
+		// response is the Token, expiresIn, user ID, the whole object that contains these props.
 
 		let url =
 			"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyANsh8OCw61tWrHkYKuVyqRcKfAWfrgcR4";

@@ -2,11 +2,11 @@ import React, { Component, lazy, Suspense } from "react";
 import Layout from "../../Components/Layout/Layout";
 import BurgerBuilder from "../BurgerBuilder/BurgerBuilder";
 
-import Checkout from "../Checkout/Checkout";
-import Orders from "../../Containers/Orders/Orders";
-import Auth from "../../Containers/Auth/Auth";
+// import Checkout from "../Checkout/Checkout";
+// import Orders from "../../Containers/Orders/Orders";
+// import Auth from "../../Containers/Auth/Auth";
 
-import Spinner from "../../Components/UI/Spinner/Spinner";
+// import Spinner from "../../Components/UI/Spinner/Spinner";
 
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 
