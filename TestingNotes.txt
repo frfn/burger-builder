@@ -124,3 +124,17 @@ We don't want to test super complex chains, no, we want to test the meat of the 
     Oh man, got a crazy amount of LITTLE prop changes, auth.js is fixed for action creator and reducer + new auth.test.js
 
     Reducer is the most SIMPLEST to test.
+
+Important Tips!
+
+- Dive deeper if you want to test more
+- Don't test unnecessary stuff... often it is the most difficult to test!
+    ... don't do it.
+
+- difficult work, no need! Just test! Redundant, not fun, why do it?
+
+Easily tested! This is how it should be!
+Does the reducer work?
+Does the button give us new prop when clicked?
+Do the components update correctly if input changes?
+
