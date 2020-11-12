@@ -11,7 +11,8 @@ export const authStart = () => {
 export const authSuccess = (authData) => {
 	return {
 		type: actionTypes.AUTH_SUCCESS,
-		authData: authData, // object of token AND userId
+		userId: authData.localId,
+		idToken: authData.idToken,
 	};
 };
 
@@ -66,7 +67,7 @@ export const auth = (email, password, isSignup) => {
 		axios
 			.post(url, authData)
 			.then((res) => {
-				// console.log(res);
+				console.log(res);
 
 				// Date().getTime() returns the time in milliseconds
 				// the expiresIn is multiplied by 1000 to make 3600 to hour!

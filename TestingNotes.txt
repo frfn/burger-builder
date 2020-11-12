@@ -115,5 +115,11 @@ BurgerBuilder.js
     
 ** Testing Redux
 
+We don't want to test super complex chains, no, we want to test the meat of the Redux, those are the reducers.
 
+    Reducers are SYNCHRONOUS and JUST FUNCTIONS, simple. We get something in, we get something out.
+
+    reducer really IS just a function... wtf.
+
+    Oh man, got a crazy amount of LITTLE prop changes, auth.js is fixed for action creator and reducer + new auth.test.js
 
