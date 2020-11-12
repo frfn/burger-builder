@@ -123,3 +123,4 @@ We don't want to test super complex chains, no, we want to test the meat of the 
 
     Oh man, got a crazy amount of LITTLE prop changes, auth.js is fixed for action creator and reducer + new auth.test.js
 
+    Reducer is the most SIMPLEST to test.
