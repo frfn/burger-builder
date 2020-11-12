@@ -45,7 +45,7 @@ const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter>
+		<BrowserRouter basename="flexers-app">
 			<React.StrictMode>
 				<App />
 			</React.StrictMode>
