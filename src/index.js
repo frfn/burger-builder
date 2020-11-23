@@ -17,6 +17,11 @@ import burgerBuilderReducer from "./Store/reducers/burgerBuilder";
 import orderReducer from "./Store/reducers/order";
 import authReducer from "./Store/reducers/auth";
 
+// Saga
+import createSagaMiddleware from "redux-saga";
+// import { logoutSaga } from "./Store/sagas/auth";
+import { watchAuth } from "./Store/sagas/";
+
 // You can put inside variable for more clean look
 /* const app = (
   <BrowserRouter>
@@ -25,6 +30,9 @@ import authReducer from "./Store/reducers/auth";
 		</React.StrictMode>
 	</BrowserRouter>
 ); */
+
+// SAGA ****
+const sagaMiddleware = createSagaMiddleware();
 
 // composed middleware/enhancers
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -41,7 +49,12 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 });
 
-const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
+const store = createStore(
+	rootReducer,
+	composeEnhancer(applyMiddleware(thunk, sagaMiddleware))
+);
+
+sagaMiddleware.run(watchAuth);
 
 ReactDOM.render(
 	<Provider store={store}>
