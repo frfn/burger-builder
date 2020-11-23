@@ -1,0 +1,45 @@
+Deploying React Apps!
+Super Easy. 
+
+Steps
+    1. Check and Adjust Basepath --> <BrowserRouter basename='my-app' />
+        - change basename if you have to
+
+    2. Build and Optimize Project --> npm run build (comes in create-react-app project)
+        - npm run build
+
+    3. Server must ALWAYS serve index.html (also for 404 cases) to ensure that Routing works correctly
+        - index.html (so that this route will be hit first no matter what, fail safe)
+            ie. i visit /users right away... not known by server, since it is defined in application!
+        - 404 cases
+
+    4. Upload build artifacts to (static) server
+        - once running the 2nd step, upload them to a static server
+            /build folder in create-react-app
+
+HANDS ON
+    Deploying
+
+    1. added a basename 'flexers-app'
+    2. Always return index.html file, static host lets us configure this, set up a catch all route and return index.html
+    3. npm run build
+    4. /build is now is project folder
+    5. checked out all the files in /build folder (nothing really interesting but index.html)
+    6. Uploading
+        1. MUST USE 'sudo npm install -g firebase-tools' -- gave me error saying I don't have permission
+        2. firebase login
+            - went to google online and made me sign in to current Firebase account (gmail account)
+        3. firebase init
+            - Hosting is the only feature selected
+            - Choose a Project
+                1. use an existing project
+                2. public directory? 'build' is the answer
+                3. configure as a SPA? 'y' is the answer
+                4. automatic builds and deploys with Github? No
+                5. rewrite build/index.html and overwrite? No
+                6. .firebaserc and firebase.json are created, this is firebase code, look into it more if you want
+        4. firebase deploy
+            - visit application!
+
+Cool it's deployed!
+    - Got someone to test!
