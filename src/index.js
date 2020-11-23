@@ -58,7 +58,7 @@ sagaMiddleware.run(watchAuth);
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter basename="flexers-app">
+		<BrowserRouter>
 			<React.StrictMode>
 				<App />
 			</React.StrictMode>

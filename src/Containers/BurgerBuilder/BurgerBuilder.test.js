@@ -16,7 +16,7 @@ describe("<BurgerBuilder />", () => {
 
 	it("should render <BuildControls /> when receiving ings", () => {
 		// wrapper.setProps({ ingredients: null }); FAILS
-		wrapper.setProps({ ingredients: {} }); // PASSES, BurgerBuilder.js will show BuildControls
+		wrapper.setProps({ ingredients: { bacon: 1 } }); // PASSES, BurgerBuilder.js will show BuildControls
 		expect(wrapper.find(BuildControls)).toHaveLength(1);
 	});
 });
