@@ -12,7 +12,23 @@ it is cleaning up each tests and all tests will be independant from each other
 
 /* 
 Jest + Enzyme
-decribe("component name", () => {})
+decribe("component name", () => {
+
+	// before each | after each
+	let wrapper;
+	beforeEach(() => {
+		wrapper = shallow(<Component />)
+	})
+
+	it("should do this", () => {
+		expect()
+	})
+
+	it("should do this", () => {
+		wrapper.setProps({ btnToggle: true})
+		expect()
+	})
+})
 
 beforeEach(() => {
 	clean up code for next test

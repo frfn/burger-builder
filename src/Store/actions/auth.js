@@ -40,8 +40,15 @@ export const checkAuthTimeout = (expirationTime) => {
 	};
 };
 
+export const setAuthRedirectPath = (path) => {
+	return {
+		type: actionTypes.SET_AUTH_REDIRECT_PATH,
+		path: path,
+	};
+};
+
 // thunk ... isSignup is just a boolean value passed from Auth.js in Containers
-export const auth = (email, password, isSignup) => {
+export const auth = (email, password, isSignUp) => {
 	return (dispatch) => {
 		dispatch(authStart()); // loading
 
@@ -59,7 +66,8 @@ export const auth = (email, password, isSignup) => {
 		let url =
 			"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyANsh8OCw61tWrHkYKuVyqRcKfAWfrgcR4";
 
-		if (!isSignup) {
+		/* isSignUp === false  */
+		if (!isSignUp) {
 			url =
 				"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyANsh8OCw61tWrHkYKuVyqRcKfAWfrgcR4";
 		}
@@ -72,11 +80,13 @@ export const auth = (email, password, isSignup) => {
 				// Date().getTime() returns the time in milliseconds
 				// the expiresIn is multiplied by 1000 to make 3600 to hour!
 				// it is wrapped again in Date(Date()) so it becomes a date obj
+
+				// res.data.expiresIn = 3600 = 1 hour!
 				const expirationDate = new Date(
 					new Date().getTime() + res.data.expiresIn * 1000
 				);
 				localStorage.setItem("token", res.data.idToken);
-				localStorage.setItem("expirationDate", expirationDate);
+				localStorage.setItem("expirationDate", expirationDate); // this is for setTimeout, which takes 1000ms = 1s!
 				localStorage.setItem("userId", res.data.localId);
 
 				dispatch(authSuccess(res.data)); // will contain token PLUS userId
@@ -89,13 +99,6 @@ export const auth = (email, password, isSignup) => {
 				console.log(error);
 				dispatch(authFail(error.response.data.error.message));
 			});
-	};
-};
-
-export const setAuthRedirectPath = (path) => {
-	return {
-		type: actionTypes.SET_AUTH_REDIRECT_PATH,
-		path: path,
 	};
 };
 
@@ -116,6 +119,9 @@ export const authCheckState = () => {
 			if (expirationDate <= new Date()) {
 				// so logout when new Date() obj hits expirationDate time
 				// console.log("SECOND ONE TRIGGERED");
+
+				// is 1201 < 1101 ? NOPE. don't logout
+				// is 1201 < 1205 ? YES.  logout!
 				dispatch(logout());
 			} else {
 				const userId = localStorage.getItem("userId");

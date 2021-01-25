@@ -3,13 +3,36 @@ import styles from "../Modal/Modal.module.css";
 import Aux from "../../HOC/Aux";
 import Backdrop from "../Backdrop/Backdrop";
 
+/* 
+EDIT:
+
+This has already been loaded in BurgerBuilder.js
+
+INITIALLY IT IS FALSE IN THIS CASE, it is USED assuming that the VALUE for show is FALSE.
+
+it already has 'state'... the component is filled WITH show prop, in BurgerBuilder, it is set to false
+and it is passed to this component. 
+
+this.props.show === false
+
+In  regard to nextProp, if the nextProp.show value is TRUE, then thinking about that, you can compare
+
+this.props.show !== nextProps.show
+
+		F       !==       T        , if this is TRUE, then rerender modal.
+
+*/
+
 /* Check Recap.txt in part4 folder to review Lifecycle Methods if need be! */
 
 class Modal extends Component {
 	/* checks to see if 'show' variable (boolean value) changes, if it does, then rerender */
 	shouldComponentUpdate(nextProps, nextState) {
+		// console.log(nextProps);
+		// console.log(this.props);
 		return (
-			nextProps.show !== this.props.show ||
+			nextProps.show /* new show value */ !==
+				this.props.show /* previous show value */ ||
 			nextProps.children !== this.props.children
 		);
 	}

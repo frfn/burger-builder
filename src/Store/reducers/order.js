@@ -4,7 +4,7 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
 	orders: [], // orders are filled via axios call to database
 	loading: false,
-	purchased: false,
+	purchased: false, // used for the routing, redirect to /, used in Checkout.js!
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +26,7 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.PURCHASE_BURGER_FAIL:
 			return {
 				...state,
+				error: action.error,
 				loading: false, // why false? Because we're done, error is handled through modal
 			};
 		case actionTypes.PURCHASE_BURGER_START:

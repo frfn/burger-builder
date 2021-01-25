@@ -1,62 +1,64 @@
 .BuildControls {
-    width: 100%;
-    background-color: #CF8F2E;
+	width: 100%;
+	background-color: #cf8f2e;
 
-    /* flex box stuff ... you can also use GRID, better. */
-    display: flex;
-    flex-flow: column;
-    align-items: center;
+	/* flex box stuff ... you can also use GRID, better. */
+	display: flex;
+	flex-flow: column;
+	align-items: center;
 
-    /* offset-x | offset-y | blur-radius | color */
-    box-shadow: 0 2px 1px #CCC;
-    margin: auto;
+	/* offset-x | offset-y | blur-radius | color */
+	box-shadow: 0 2px 1px #ccc;
+	margin: auto;
 
-    /* vertical | horizontal */
-    padding: 10px 0;
+	/* vertical | horizontal */
+	padding: 10px 0;
 }
 
 .OrderButton {
-    background-color: #DAD735;
-    outline: none;
-    cursor: pointer;
-    border: 1px solid #966909;
-    color: #966909;
-    font-family: inherit;
-    font-size: 1.2em;
-    padding: 15px 30px;
+	background-color: #dad735;
+	outline: none;
+	cursor: pointer;
+	border: 1px solid #966909;
+	color: #966909;
+	font-family: inherit;
+	font-size: 1.2em;
+	padding: 15px 30px;
 
-    /* offset-x | offset-y | blur-radius | color */
-    box-shadow: 0 0 7px #966909;
+	/* offset-x | offset-y | blur-radius | color */
+	box-shadow: 0 0 7px #966909;
 }
 
-.OrderButton:hover, .OrderButton:active {
-    background-color: #A0DB41;
-    border: 1px solid #966909;
-    color: #966909;
+.OrderButton:hover,
+.OrderButton:active {
+	background-color: #a0db41;
+	border: 1px solid #966909;
+	color: #966909;
 }
 
 .OrderButton:disabled {
-    background-color: #C7C6C6;
-    cursor: not-allowed;
-    border: 1px solid #ccc;
-    color: #888888;
+	background-color: #c7c6c6;
+	cursor: not-allowed;
+	border: 1px solid #ccc;
+	color: #888888;
 }
 
 /* ANIMATION is controlled here */
+/* :not(:disables) is basically saying, if not disabled, then do this */
 .OrderButton:not(:disabled) {
-    animation: enable .4s linear;
+	animation: enable 0.4s linear;
 }
 
 /* The key frames is used with animation */
 /* The percentages are used for loading, from 0% to 100% */
 @keyframes enable {
-    0% {
-        transform: scale(1);
-    }
-    60% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
+	0% {
+		transform: scale(1);
+	}
+	60% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+	}
 }

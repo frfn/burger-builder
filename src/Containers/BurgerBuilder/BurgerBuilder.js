@@ -388,6 +388,8 @@ export class BurgerBuilder extends Component {
 				two args for modal is for the backdrop ui
                  */}
 				<Modal decline={this.declineHandler} show={purchaseNow}>
+					{" "}
+					{/* purchase now is TRUE when user clicks Order Now, FALSE otherwise */}
 					{orderSummary}
 				</Modal>
 				{burger}

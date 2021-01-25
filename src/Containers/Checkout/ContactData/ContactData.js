@@ -307,6 +307,7 @@ class ContactData extends Component {
 			*/
 			orderData: formData,
 			userId: this.props.userId,
+			// test: ["hi", "hi2"] this will be sent to firebase no problem, 0: "hi", 1: "hi2" etc.
 		};
 
 		// console.log(order.userId);

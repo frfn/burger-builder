@@ -92,9 +92,9 @@ export const fetchOrders = (userId, token) => {
 			*/
 
 			//auth?= is a query param
-			.get(`/orders/${userId}.json?auth=${token}`) // auth IS a variable that is explicitly used in Firebase
+			.get(`/orders/${userId}.json?auth=${token}`) // auth IS a variable that is explicitly used in Firebase ... auth && token is PROBABLY CONNECTED inside Firebase somehow!
 			.then((res) => {
-				// console.log(res);
+				console.log(res);
 				if (res) {
 					const fetchedOrders = [];
 					for (let order in res.data) {
@@ -104,6 +104,7 @@ export const fetchOrders = (userId, token) => {
 						});
 					}
 					// console.log(getState());
+					console.log(fetchedOrders);
 					dispatch(fetchOrdersSuccess(fetchedOrders));
 				}
 			})

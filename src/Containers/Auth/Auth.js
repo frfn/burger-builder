@@ -46,10 +46,18 @@ class Auth extends Component {
 	};
 
 	componentDidMount() {
-		// buildingBurger === boolean value && authRefirectPath === string
+		// buildingBurger === boolean value && authRedirectPath === string
 		// if user clicks on Sign In/ Register, set redirect path to "/"
+
+		/* if youre NOT building a burger && the path is NOT "/", go back to "/" */
+
 		if (!this.props.buildingBurger && this.props.authRedirectPath !== "/") {
 			// / !== /
+
+			/* 
+			if user is NOT building a burger AND the path is /checkout, redirect to / -- this is an error, because there is NO order being processed
+			this is a routing guard
+			*/
 			this.props.onSetAuthRedirectPath(); // sets redirect path to "/"
 		}
 	}
