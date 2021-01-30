@@ -1,4 +1,4 @@
-# Burger Builder-
+# Burger Builder-Recapped and Completed.
 
 Takeaways:
 
@@ -66,7 +66,7 @@ because even the _simplest_ thing can go wrong. So test.
 
 -   Steps to test
 
-    1.  `npm -i --save enzyme react-test-renderer enzyme-adapter-react-16`
+    1.  `npm install --save enzyme react-test-renderer enzyme-adapter-react-16`
     2.  Write tests
 
         -   Files must have `.test.js` extensions to become test specific
